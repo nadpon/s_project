@@ -117,8 +117,7 @@ public class CustomAdapter extends BaseAdapter {
             public void onClick(View v) {
                 String pos = nFeed.get(position).postName;
                 Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
-                mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color));
-                notifyDataSetChanged();
+                //mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color))
             }
         });
 
