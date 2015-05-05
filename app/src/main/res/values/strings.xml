@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">s_project</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="app_id">293293804178666</string>
+    <string name="or">หรือ</string>
+    <string name="email">อีเมล์</string>
+    <string name="password">รหัสผ่าน</string>
+    <string name="login">เข้าสู่ระบบ</string>
+    <string name="signup">ลงทะเบียน</string>
+    <string name="forgetpass">ลืมรหัสผ่าน</string>
+    <string name="title_activity_signup">ลงทะเบียน</string>
+    <string name="information">ข้อมูลส่วนตัว</string>
+    <string name="please_wait">กรุณารอสักครู่ ...</string>
+    <string name="noInternetConnect">กรุณาเชื่อมต่ออินเทอร์เน็ต</string>
+    <string name="dtail">รายละเอียด :</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">ออกจากระบบ</string>
+
+    <string name="newfeed">หน้าแรก</string>
+    <string name="hotissue">ประเด็นร้อน</string>
+    <string name="noti">แจ้งเตือน</string>
+
+    <string name="a">ถูกใจ</string>
+
+    <string-array name="sex">
+        <item>ชาย</item>
+        <item>หญิง</item>
+    </string-array>
+
+    <string-array name="cate">
+        <item>จุดเสี่ยงอาชญากรรม</item>
+        <item>ชำรุด ทรุดโทรม</item>
+        <item>คมนาคม</item>
+        <item>สิ่งแวดล้อม</item>
+    </string-array>
+
+    <color name="title_color">#e74c3c</color>
+    <color name="torquoise_color">#1abc9c</color>
+    <color name="post_1_color">#ed1f24</color>
+    <color name="post_2_color">#70bf4e</color>
+    <color name="post_3_color">#FFC107</color>
+    <color name="post_4_color">#34c6f4</color>
+    <color name="post_5_color">#E91E63</color>
+    <color name="post_6_color">#212121</color>
+    
+    <color name="tab_selected">#e74c3c</color>
+    <color name="tab_unselected">#FFFFFF</color>
+
+    <string name="title_activity_view_all_post">ViewAllPost</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_post">PostActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_check_dup">CheckDup</string>
+    <string name="title_activity_new_feed_fragment">NewFeedFragmentActivity</string>
+    <string name="title_activity_new_feed">NewFeedActivity</string>
+    <string name="title_activity_personal">PersonalActivity</string>
+    <string name="title_activity_post_info">PostInfoActivity</string>
+    <string name="title_activity_post_info_full">PostInfoFullActivity</string>
+</resources>

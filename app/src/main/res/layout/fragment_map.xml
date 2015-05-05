@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:name="com.google.android.gms.maps.SupportMapFragment">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="185dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="500dp"
+        android:layout_gravity="left">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/submit_Button"
+            android:background="@drawable/green_button_style"
+            android:text="ยืนยันตำแหน่ง"
+            android:textSize="18dp"
+            android:textColor="#34495e"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="185dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="500dp"
+        android:layout_gravity="right">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/cancel_Button"
+            android:background="@drawable/red_button_style"
+            android:text="ยกเลิกการร้องเรียน"
+            android:textSize="18dp"
+            android:textColor="#34495e"/>
+    </LinearLayout>
+</fragment>

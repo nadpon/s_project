@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:background="@drawable/border2">
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="กรุณาเชื่อมต่ออินเทอร์เน็ต"
+            android:textColor="#34495e"
+            android:textSize="18dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal">
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ตกลง"
+            android:background="@drawable/green_button_style"/>
+    </LinearLayout>
+</LinearLayout>
