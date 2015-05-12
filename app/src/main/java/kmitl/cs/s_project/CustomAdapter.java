@@ -1,18 +1,25 @@
 package kmitl.cs.s_project;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import org.apache.commons.logging.Log;
+
 import java.util.List;
 
 /**
@@ -99,7 +106,7 @@ public class CustomAdapter extends BaseAdapter {
         }
 
         mViewHolder.postStatus.setText(feed.statusName);
-        mViewHolder.postDetail.setText(mActivity.getResources().getText(R.string.dtail)+" "+feed.detail);
+        mViewHolder.postDetail.setText(mActivity.getResources().getText(R.string.dtail) + " " + feed.detail);
 
         cd = new ConnectionDetector(mActivity.getApplicationContext());
         isInternetPresent = cd.isConnectingToInternet();
@@ -112,22 +119,25 @@ public class CustomAdapter extends BaseAdapter {
         mViewHolder.nShareTxt.setText(String.valueOf(feed.nShare));
 
         // like Button
-        mViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String pos = nFeed.get(position).postName;
-                int p = nFeed.get(position).postID;
+        if (mViewHolder!=null){
+            mViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String pos = nFeed.get(position).postName;
+                    int p = nFeed.get(position).postID;
                 /*if (p==feed.postID){
                     Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
                 }*/
                 if (p==p){
                     Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
+                    mViewHolder.likeButton.setTag(position);
+                    mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color));
                 }
-                //Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
-                //mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color));
-
-            }
-        });
+                    //Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
+                    //mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color));
+                }
+            });
+        }
 
         // Intent to Personal Activity
         mViewHolder.userImage.setOnClickListener(new View.OnClickListener() {

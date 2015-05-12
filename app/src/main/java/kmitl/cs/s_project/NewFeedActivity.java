@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -145,33 +146,33 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
         mListView = (ListView) rootView.findViewById(R.id.listView);
 
         cd = new ConnectionDetector(getActivity().getApplicationContext());
-            isInternetPresent = cd.isConnectingToInternet();
-            if (isInternetPresent){
-                SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
-                String load = sp.getString("load", "");
-                String result = sp.getString("result","");
-                if (load.equals("yes")){
-                    showData(result);
-                }
-                else {
-                    new getNewFeed().execute();
-                }
+        isInternetPresent = cd.isConnectingToInternet();
+        if (isInternetPresent){
+            SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+            String load = sp.getString("load", "");
+            String result = sp.getString("result","");
+            if (load.equals("yes")){
+                showData(result);
             }
             else {
-                final Dialog dialog = new Dialog(this.getActivity());
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.lost_internet_dialog);
-                dialog.setCancelable(false);
-                dialog.show();
-                Button ok = (Button) dialog.findViewById(R.id.ok);
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                        getActivity().recreate();
-                    }
-                });
+                new getNewFeed().execute();
             }
+        }
+        else {
+            final Dialog dialog = new Dialog(this.getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.lost_internet_dialog);
+            dialog.setCancelable(false);
+            dialog.show();
+            Button ok = (Button) dialog.findViewById(R.id.ok);
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().recreate();
+                    dialog.dismiss();
+                }
+            });
+        }
 
         return rootView;
     }

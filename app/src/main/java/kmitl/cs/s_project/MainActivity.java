@@ -93,10 +93,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }, ACTION_BUTTON_SHOW_DELAY_MS);
     }
 
-    public void onLikeClick(View v){
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -120,8 +116,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             logOut();
             return true;
         }
+
+        if (id == R.id.action_me){
+            go_to_personal();
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    private void go_to_personal() {
+        SharedPreferences sp = getSharedPreferences("prefs_user",MODE_PRIVATE);
+        String userID = sp.getString("key_userID", "");
+
+        Intent intent = new Intent(this,PersonalActivity.class);
+        intent.putExtra("uId",Integer.parseInt(userID));
+        startActivity(intent);
+    }
+
     private void logOut() {
         SharedPreferences sp = getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();

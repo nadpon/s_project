@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
     <RelativeLayout
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
@@ -157,7 +157,6 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:text="0"
-            android:maxLines="5"
             android:layout_toRightOf="@id/h"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
@@ -191,6 +190,5 @@
             android:background="@drawable/border3"
             android:layout_toRightOf="@+id/commentButton"
             android:layout_below="@+id/postImage"/>
-
     </RelativeLayout>
 </RelativeLayout>
