@@ -154,12 +154,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        SharedPreferences sp = getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
-        String result = sp.getString("result","");
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("load", "yes");
-        editor.putString("result", result);
-        editor.commit();
+        if (tab.getPosition()==0){
+            SharedPreferences sp = getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+            String result = sp.getString("result","");
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("load", "yes");
+            editor.putString("result", result);
+            editor.commit();
+        }
+
+        if (tab.getPosition()==1){
+            SharedPreferences sp = getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
+            String result = sp.getString("result","");
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("load", "yes");
+            editor.putString("result", result);
+            editor.commit();
+        }
+
     }
 
     @Override
