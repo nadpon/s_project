@@ -37,7 +37,7 @@
         <item>สิ่งแวดล้อม</item>
     </string-array>
 
-    <color name="title_color">#e74c3c</color>
+    <color name="title_color">#009999</color>
     <color name="torquoise_color">#1abc9c</color>
     <color name="post_1_color">#ed1f24</color>
     <color name="post_2_color">#70bf4e</color>

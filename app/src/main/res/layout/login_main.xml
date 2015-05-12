@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe74c3c"
+    android:background="#009999"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true">
@@ -14,56 +14,11 @@
         android:id="@+id/Logo"
         android:src="@drawable/app_logo"/>
 
-    <com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:background="#ffe74c3c"
-        android:focusable="true" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/line"
-            android:layout_marginLeft="37dp"
-            android:layout_gravity="center">
-        </ImageView>
-
-        <TextView
-            android:text="@string/or"
-            android:textSize="15dp"
-            android:textColor="#ecf0f1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center">
-        </TextView>
-
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:src="@drawable/line"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center">
-        </ImageView>
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="90dp">
 
         <EditText
             android:layout_width="280dp"
@@ -111,14 +66,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="20dp">
 
         <Button
             android:layout_width="185dp"
             android:layout_height="50dp"
             android:text="@string/login"
+            android:textSize="18dp"
             android:textColor="#ecf0f1"
-            android:background="@drawable/red_button_style"
+            android:background="#006666"
             android:id="@+id/loginButton"
             android:clickable="false">
         </Button>
@@ -126,8 +82,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_height="30dp"
+        android:layout_marginTop="100dp">
 
         <TextView
             android:layout_width="wrap_content"

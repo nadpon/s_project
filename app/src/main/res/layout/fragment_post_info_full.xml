@@ -13,7 +13,7 @@
             android:id="@+id/userImage"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/user_mp"/>
         <TextView
             android:id="@+id/a"
             android:layout_width="10dp"

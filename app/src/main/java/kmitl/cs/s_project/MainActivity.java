@@ -39,7 +39,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayUseLogoEnabled(true);
-            getSupportActionBar().setLogo(R.drawable.ic_launcher);
+            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             // Initilization
             viewPager = (ViewPager) findViewById(R.id.pager);
