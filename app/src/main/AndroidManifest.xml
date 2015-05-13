@@ -78,25 +78,25 @@
         </activity>
         <activity
             android:name=".PersonalActivity"
-            android:label="@string/title_activity_personal"
+            android:label="ข้อมูลส่วนตัว"
             android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme" >
         </activity>
         <activity
             android:name=".PostInfoActivity"
-            android:label="@string/title_activity_post_info"
+            android:label="ข้อมูลเรื่องร้องเรียน"
             android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme" >
         </activity>
         <activity
             android:name=".PostInfoFullActivity"
-            android:label="@string/title_activity_post_info_full"
+            android:label="ข้อมูลเรื่องร้องเรียน"
             android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme" >
         </activity>
         <activity
             android:name=".PostMapActivity"
-            android:label="@string/title_activity_post_map"
+            android:label="ตำแหน่งเรื่องร้องเรียน"
             android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme">
         </activity>

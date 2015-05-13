@@ -75,6 +75,7 @@
             android:textSize="18dp"
             android:textColor="#ecf0f1"
             android:background="#006666"
+            android:alpha="0.5"
             android:id="@+id/loginButton"
             android:clickable="false">
         </Button>

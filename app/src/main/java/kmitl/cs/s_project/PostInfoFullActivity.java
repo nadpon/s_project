@@ -51,6 +51,8 @@ public class PostInfoFullActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -58,7 +60,7 @@ public class PostInfoFullActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_post_info_full, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -67,6 +69,7 @@ public class PostInfoFullActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        onBackPressed();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
