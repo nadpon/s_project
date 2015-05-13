@@ -95,7 +95,7 @@
             android:layout_below="@+id/d"/>
         <TextView
             android:id="@+id/postStatus"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=""
             android:gravity="center_vertical"

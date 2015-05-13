@@ -24,6 +24,8 @@
     <string name="noti">แจ้งเตือน</string>
 
     <string name="a">ถูกใจ</string>
+    <string name="b">ติดตามเรื่องเรียน</string>
+    <string name="c">ดูตำแหน่งบนแผนที่</string>
 
     <string-array name="sex">
         <item>ชาย</item>
@@ -45,6 +47,8 @@
     <color name="post_4_color">#34c6f4</color>
     <color name="post_5_color">#E91E63</color>
     <color name="post_6_color">#212121</color>
+    <color name="post_7_color">#9b59b6</color>
+    <color name="post_8_color">#7f8c8d</color>
     
     <color name="tab_selected">#e74c3c</color>
     <color name="tab_unselected">#FFFFFF</color>
@@ -60,4 +64,5 @@
     <string name="title_activity_personal">PersonalActivity</string>
     <string name="title_activity_post_info">PostInfoActivity</string>
     <string name="title_activity_post_info_full">PostInfoFullActivity</string>
+    <string name="title_activity_post_map">PostMapActivity</string>
 </resources>

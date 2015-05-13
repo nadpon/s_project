@@ -3,7 +3,9 @@ package kmitl.cs.s_project;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -148,6 +150,34 @@ public class CustomAdapter extends BaseAdapter {
                 Intent intent = new Intent(mActivity,PersonalActivity.class);
                 intent.putExtra("uId",uId);
                 mActivity.startActivity(intent);
+            }
+        });
+
+        final String a = mActivity.getResources().getString(R.string.b);
+        final String b = mActivity.getResources().getString(R.string.c);
+        final String[] choose = {a,b};
+
+        mViewHolder.arrowDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setItems(choose, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (choose[which].equals(a)){
+
+                        }
+                        else {
+                            Intent intent = new Intent(mActivity,PostMapActivity.class);
+                            intent.putExtra("lat",String.valueOf(nFeed.get(position).gpsLatitude));
+                            intent.putExtra("lng",String.valueOf(nFeed.get(position).gpsLongitude));
+                            mActivity.startActivity(intent);
+                        }
+                    }
+                });
+                builder.setNegativeButton(null, null);
+                builder.create();
+                builder.show();
             }
         });
 

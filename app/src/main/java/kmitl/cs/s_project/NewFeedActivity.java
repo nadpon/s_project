@@ -145,7 +145,7 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
 
         mListView = (ListView) rootView.findViewById(R.id.listView);
 
-        cd = new ConnectionDetector(getActivity().getApplicationContext());
+        /*cd = new ConnectionDetector(getActivity().getApplicationContext());
         isInternetPresent = cd.isConnectingToInternet();
         if (isInternetPresent){
             SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
@@ -172,7 +172,8 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
                     dialog.dismiss();
                 }
             });
-        }
+        }*/
+        new getNewFeed().execute();
 
         return rootView;
     }
