@@ -31,7 +31,7 @@ public class PostMapActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_post_map, container, false);
-        //รับค่า
+        //get value from intent
         lat = Double.parseDouble(getActivity().getIntent().getStringExtra("lat"));
         lng = Double.parseDouble(getActivity().getIntent().getStringExtra("lng"));
 

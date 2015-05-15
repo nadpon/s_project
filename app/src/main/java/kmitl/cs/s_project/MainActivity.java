@@ -1,5 +1,6 @@
 package kmitl.cs.s_project;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,13 +15,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     private static final int ACTION_BUTTON_SHOW_DELAY_MS = 200;
     ViewPager viewPager;
     TabsPagerAdapter mAdapter;
+    ConnectionDetector cd;
+    Boolean isInternetPresent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,45 +38,66 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         String login = sp.getString("key_login","");
 
         if (login.equals("yes")){
-            ViewAllPost viewAllPost = new ViewAllPost();
-            android.support.v4.app.FragmentTransaction fragmenttransaction = getSupportFragmentManager().beginTransaction();
-            fragmenttransaction.add(android.R.id.content, viewAllPost);
-            fragmenttransaction.commit();
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
-            getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            // Initilization
-            viewPager = (ViewPager) findViewById(R.id.pager);
-            mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-            viewPager.setAdapter(mAdapter);
-            getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-            // Adding Tabs
-            getSupportActionBar().addTab(getSupportActionBar().newTab().setText(R.string.newfeed).setTabListener(this));
-            getSupportActionBar().addTab(getSupportActionBar().newTab().setText(R.string.hotissue).setTabListener(this));
-            getSupportActionBar().addTab(getSupportActionBar().newTab().setText(R.string.noti).setTabListener(this));
+            cd = new ConnectionDetector(getApplicationContext());
+            isInternetPresent = cd.isConnectingToInternet();
+            if (isInternetPresent){
+                ViewAllPost viewAllPost = new ViewAllPost();
+                android.support.v4.app.FragmentTransaction fragmenttransaction = getSupportFragmentManager().beginTransaction();
+                fragmenttransaction.add(android.R.id.content, viewAllPost);
+                fragmenttransaction.commit();
+                getSupportActionBar().setHomeButtonEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                getSupportActionBar().setDisplayUseLogoEnabled(true);
+                getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                // Initilization
+                viewPager = (ViewPager) findViewById(R.id.pager);
+                mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-            viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                viewPager.setAdapter(mAdapter);
+                getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
+                // Adding Tabs
+                getSupportActionBar().addTab(getSupportActionBar().newTab().setText(R.string.newfeed).setTabListener(this));
+                getSupportActionBar().addTab(getSupportActionBar().newTab().setText(R.string.hotissue).setTabListener(this));
+                getSupportActionBar().addTab(getSupportActionBar().newTab().setText(R.string.noti).setTabListener(this));
 
-                }
+                viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                @Override
-                public void onPageSelected(int position) {
-                    // on changing the page
-                    // make respected tab selected
-                    getSupportActionBar().setSelectedNavigationItem(position);
-                }
+                    }
 
-                @Override
-                public void onPageScrollStateChanged(int state) {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // on changing the page
+                        // make respected tab selected
+                        getSupportActionBar().setSelectedNavigationItem(position);
+                    }
 
-                }
-            });
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+            }
+            else {
+                final Dialog dialog = new Dialog(this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.lost_internet_dialog);
+                dialog.setCancelable(false);
+
+                Button ok = (Button) dialog.findViewById(R.id.ok);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MainActivity.this.recreate();
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+            }
         }
         else {
             LoginActivity loginactivity = new LoginActivity();
@@ -119,17 +146,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         if (id == R.id.action_me){
             go_to_personal();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void go_to_personal() {
-        SharedPreferences sp = getSharedPreferences("prefs_user",MODE_PRIVATE);
-        String userID = sp.getString("key_userID", "");
+        cd = new ConnectionDetector(getApplicationContext());
+        isInternetPresent = cd.isConnectingToInternet();
+        if (isInternetPresent){
+            SharedPreferences sp = getSharedPreferences("prefs_user",MODE_PRIVATE);
+            String userID = sp.getString("key_userID", "");
 
-        Intent intent = new Intent(this,PersonalActivity.class);
-        intent.putExtra("uId",Integer.parseInt(userID));
-        startActivity(intent);
+            Intent intent = new Intent(this,PersonalActivity.class);
+            intent.putExtra("uId",Integer.parseInt(userID));
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(MainActivity.this, getResources().getText(R.string.noInternetConnect)
+                    , Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void logOut() {

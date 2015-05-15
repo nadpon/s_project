@@ -4,7 +4,7 @@
     <!--ME Post-->
     <item android:id="@+id/action_me"
         android:icon="@drawable/ic_action_person"
-        android:title="ข้อมูลตัว"
+        android:title="ข้อมูลส่วนตัว"
         app:showAsAction="ifRoom" />
 
     <!--Setting-->

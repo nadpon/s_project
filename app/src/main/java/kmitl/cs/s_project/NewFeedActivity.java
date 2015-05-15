@@ -3,6 +3,7 @@ package kmitl.cs.s_project;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
             pDialog = new ProgressDialog(NewFeedActivity.this.getActivity());
             pDialog.setMessage(getResources().getString(R.string.please_wait));
             pDialog.setIndeterminate(false);
@@ -145,35 +147,15 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
 
         mListView = (ListView) rootView.findViewById(R.id.listView);
 
-        /*cd = new ConnectionDetector(getActivity().getApplicationContext());
-        isInternetPresent = cd.isConnectingToInternet();
-        if (isInternetPresent){
-            SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
-            String load = sp.getString("load", "");
-            String result = sp.getString("result","");
-            if (load.equals("yes")){
-                showData(result);
-            }
-            else {
-                new getNewFeed().execute();
-            }
+        SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+        String load = sp.getString("load", "");
+        String result = sp.getString("result","");
+        if (load.equals("yes")){
+            showData(result);
         }
         else {
-            final Dialog dialog = new Dialog(this.getActivity());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.lost_internet_dialog);
-            dialog.setCancelable(false);
-            dialog.show();
-            Button ok = (Button) dialog.findViewById(R.id.ok);
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().recreate();
-                    dialog.dismiss();
-                }
-            });
-        }*/
-        new getNewFeed().execute();
+            new getNewFeed().execute();
+        }
 
         return rootView;
     }
