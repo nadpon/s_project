@@ -104,7 +104,13 @@
             android:name=".SettingPageActivity"
             android:label="การตั้งค่า"
             android:screenOrientation="portrait"
-            android:theme="@style/CustomActionBarTheme">
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="เปลี่ยนรหัสผ่าน"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomActionBarTheme" >
         </activity>
     </application>
 

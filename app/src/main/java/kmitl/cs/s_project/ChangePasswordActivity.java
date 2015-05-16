@@ -1,46 +1,28 @@
 package kmitl.cs.s_project;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
 
-public class SettingPageActivity extends ActionBarActivity {
-    LinearLayout editMyInfo;
-    LinearLayout editPassword;
-    LinearLayout aboutApp;
+public class ChangePasswordActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_page);
+        setContentView(R.layout.activity_change_password);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        editMyInfo = (LinearLayout) findViewById(R.id.b);
-        editPassword = (LinearLayout) findViewById(R.id.c);
-        aboutApp = (LinearLayout) findViewById(R.id.e);
-
-        editPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingPageActivity.this,ChangePasswordActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_setting_page, menu);
-        return false;
+        getMenuInflater().inflate(R.menu.menu_change_password, menu);
+        return true;
     }
 
     @Override
