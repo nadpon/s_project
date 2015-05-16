@@ -2,6 +2,7 @@ package kmitl.cs.s_project;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
@@ -63,7 +64,7 @@ public class PersonalActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_personal, menu);
+        getMenuInflater().inflate(R.menu.menu_view_all_post, menu);
         return true;
     }
 
@@ -77,10 +78,16 @@ public class PersonalActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            setting();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setting() {
+        Intent intent = new Intent(PersonalActivity.this,SettingPageActivity.class);
+        startActivity(intent);
     }
 
     /**

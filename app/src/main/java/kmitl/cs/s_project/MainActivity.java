@@ -136,6 +136,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            setting();
             return true;
         }
 
@@ -149,6 +150,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setting() {
+        Intent intent = new Intent(MainActivity.this,SettingPageActivity.class);
+        startActivity(intent);
     }
 
     private void go_to_personal() {

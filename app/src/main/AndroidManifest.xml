@@ -98,6 +98,12 @@
             android:name=".PostMapActivity"
             android:label="ตำแหน่งเรื่องร้องเรียน"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".SettingPageActivity"
+            android:label="การตั้งค่า"
+            android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme">
         </activity>
     </application>
