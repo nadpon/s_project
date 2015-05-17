@@ -49,11 +49,32 @@
         android:clickable="true"
         android:background="@drawable/backgroundstate"
         android:layout_below="@+id/b"
+        android:divider="@drawable/mydivider"
+        android:showDividers="middle"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="เปลี่ยนรหัสผ่าน"
+            android:textSize="18dp"
+            android:gravity="center_vertical"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7f8c8d" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/f"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:background="@drawable/backgroundstate"
+        android:layout_below="@+id/c"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="จัดการเรื่องร้องเรียนที่ติดตาม"
             android:textSize="18dp"
             android:gravity="center_vertical"/>
     </LinearLayout>
@@ -63,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/c">
+        android:layout_below="@+id/f">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

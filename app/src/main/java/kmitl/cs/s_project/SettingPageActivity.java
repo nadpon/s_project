@@ -14,6 +14,7 @@ public class SettingPageActivity extends ActionBarActivity {
     LinearLayout editMyInfo;
     LinearLayout editPassword;
     LinearLayout aboutApp;
+    LinearLayout editFollow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class SettingPageActivity extends ActionBarActivity {
         editMyInfo = (LinearLayout) findViewById(R.id.b);
         editPassword = (LinearLayout) findViewById(R.id.c);
         aboutApp = (LinearLayout) findViewById(R.id.e);
+        editFollow = (LinearLayout) findViewById(R.id.f);
 
         editPassword.setOnClickListener(new View.OnClickListener() {
             @Override
