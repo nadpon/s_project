@@ -29,6 +29,14 @@ public class SettingPageActivity extends ActionBarActivity {
         aboutApp = (LinearLayout) findViewById(R.id.e);
         editFollow = (LinearLayout) findViewById(R.id.f);
 
+        editMyInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingPageActivity.this,EditMyInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         editPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

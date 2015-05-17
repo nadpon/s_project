@@ -120,6 +120,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme" >
         </activity>
+        <activity
+            android:name=".EditMyInfoActivity"
+            android:label="แก้ไขข้อมูลส่วนตัว"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomActionBarTheme">
+        </activity>
     </application>
 
 </manifest>
