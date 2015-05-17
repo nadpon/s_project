@@ -149,7 +149,7 @@ public class ForgetpassActivity extends ActionBarActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                return js_result;
+                return null;
             }
 
             @Override

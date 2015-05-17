@@ -26,6 +26,11 @@
     <string name="a">ถูกใจ</string>
     <string name="b">ติดตามเรื่องเรียน</string>
     <string name="c">ดูตำแหน่งบนแผนที่</string>
+    <string name="d">รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร</string>
+    <string name="e">รหัสผ่านใหม่ไม่ตรงกัน</string>
+    <string name="f">กรุณากรอกข้อมูลให้ครบ</string>
+    <string name="g">ใส่รหัสผ่านเก่าผิด กรุณาใส่รหัสผ่านอีกครั้ง</string>
+    <string name="h">เปลี่ยนรหัสผ่านสำเร็จ</string>
 
     <string-array name="sex">
         <item>ชาย</item>

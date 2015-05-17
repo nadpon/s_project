@@ -17,9 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
-
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     private static final int ACTION_BUTTON_SHOW_DELAY_MS = 200;
