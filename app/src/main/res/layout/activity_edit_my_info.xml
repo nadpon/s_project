@@ -6,6 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:id="@+id/main"
     tools:context="kmitl.cs.s_project.SignupActivity$PlaceholderFragment">
 
     <LinearLayout
@@ -68,6 +69,20 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="-5dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/emailEditText"
+            android:hint=" อีเมล์" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_marginTop="-10dp">
         <TextView
             android:layout_width="50dp"
@@ -81,7 +96,7 @@
             android:id="@+id/sex_spinner"
             android:spinnerMode="dropdown"
             android:layout_marginLeft="-12dp"
-            android:layout_marginTop="-2.1dp">
+            android:layout_marginTop="0dp">
         </Spinner>
     </LinearLayout>
 
@@ -107,7 +122,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/signupButton"
+            android:id="@+id/saveButton"
             android:background="#006666"
             android:alpha="0.5"
             android:text="บันทึก"
