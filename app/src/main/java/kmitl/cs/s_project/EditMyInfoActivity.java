@@ -55,7 +55,7 @@ public class EditMyInfoActivity extends ActionBarActivity {
     String js_result = "";
     JSONObject jsonObject;
     public static final int REQUEST_GALLERY = 1,REQUEST_CAMERA = 2;
-    private final String[] choose = {"∂Ë“¬¿“æ","‡≈◊Õ°®“°§≈—ß√Ÿª¿“æ"};
+    private final String[] choose = {"‡∏ñ‡πà‡∏≤‡∏¢‡∏†‡∏≤‡∏û","‡πÄ‡∏•‡∏∑‡∏≠‡∏Å‡∏à‡∏≤‡∏Å‡∏Ñ‡∏•‡∏±‡∏á‡∏£‡∏π‡∏õ‡∏†‡∏≤‡∏û"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,8 @@ public class EditMyInfoActivity extends ActionBarActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //∑”µ√ßπ’È µËÕ‰ª
-                // update ¢ÈÕ¡Ÿ≈
+                //‡∏ó‡∏≥‡∏ï‡∏£‡∏á‡∏ô‡∏µ‡πâ ‡∏ï‡πà‡∏≠‡πÑ‡∏õ
+                // update ‡∏Ç‡πâ‡∏≠‡∏°‡∏π‡∏•
             }
         });
     }
@@ -176,7 +176,7 @@ public class EditMyInfoActivity extends ActionBarActivity {
                     email.setText(jsonObject.getString("email"));
 
                     String sex = jsonObject.getString("sex");
-                    if (sex.equals("™“¬")){
+                    if (sex.equals("‡∏ä‡∏≤‡∏¢")){
                         sexSpinner.setSelection(1);
                     }
                     else {
