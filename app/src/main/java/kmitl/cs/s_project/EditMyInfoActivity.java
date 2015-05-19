@@ -1,14 +1,24 @@
 package kmitl.cs.s_project;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -35,11 +46,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class EditMyInfoActivity extends ActionBarActivity {
@@ -49,6 +64,8 @@ public class EditMyInfoActivity extends ActionBarActivity {
     Button saveButton;
     ArrayAdapter<CharSequence> adapter;
     Bitmap bitmap=null;
+    Uri imageUri;
+    Uri selectedImageUri = null;
     LinearLayout main;
     ProgressDialog pDialog;
     InputStream is = null;
@@ -56,6 +73,7 @@ public class EditMyInfoActivity extends ActionBarActivity {
     JSONObject jsonObject;
     public static final int REQUEST_GALLERY = 1,REQUEST_CAMERA = 2;
     private final String[] choose = {"ถ่ายภาพ","เลือกจากคลังรูปภาพ"};
+    String displayImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +98,48 @@ public class EditMyInfoActivity extends ActionBarActivity {
         sexSpinner.setAdapter(adapter);
 
         new getMyInfo().execute();
+
+        //==========================================================================================================
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditMyInfoActivity.this);
+                builder.setTitle("กำหนดรูปภาพประจำตัว");
+                builder.setItems(choose,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //รับจาก gallery
+                        if (choose[which].equals("เลือกจากคลังรูปภาพ")){
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.setType("image/*");
+                            startActivityForResult(Intent.createChooser(intent,"เลือกรูปภาพ"), REQUEST_GALLERY);
+                        }
+                        //รับจาก camera
+                        else{
+                            String timeStamp =
+                                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                            String imageFileName = "IMG_" + timeStamp + ".jpg";
+                            File f = new File(Environment.getExternalStorageDirectory()
+                                    , "DCIM/Camera/" + imageFileName);
+                            imageUri = Uri.fromFile(f);
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                            startActivityForResult(intent,  REQUEST_CAMERA);
+                        }
+                    }
+                });
+                builder.setNegativeButton(null, null);
+                builder.create();
+                builder.show();
+            }
+        });
+
         // ==========================================================================================================
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ทำตรงนี้ ต่อไป
                 // update ข้อมูล
+                new uploadInfo().execute();
             }
         });
     }
@@ -113,6 +167,192 @@ public class EditMyInfoActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //======================================================================================================
+    public class uploadInfo extends AsyncTask<Void, Void, Void>{
+        SharedPreferences sp = getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+        String uID = sp.getString("key_userID","");
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(EditMyInfoActivity.this);
+            pDialog.setMessage(getResources().getString(R.string.please_wait));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            if (bitmap==null){
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("userID",uID));
+                nameValuePairs.add(new BasicNameValuePair("fName",fName.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("lName",lName.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("address",address.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("tel",tel.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("email",email.getText().toString()));
+                Object selectedItem = sexSpinner.getSelectedItem();
+                String sex = selectedItem.toString();
+                nameValuePairs.add(new BasicNameValuePair("sex",sex));
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/upDateInfo.php");
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    httpClient.execute(httpPost);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("userID",uID));
+                nameValuePairs.add(new BasicNameValuePair("fName",fName.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("lName",lName.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("address",address.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("tel",tel.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("email",email.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("displayImage",displayImage));
+
+                Object selectedItem = sexSpinner.getSelectedItem();
+                String sex = selectedItem.toString();
+                nameValuePairs.add(new BasicNameValuePair("sex",sex));
+
+                ByteArrayOutputStream bao ;
+                bao = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+                byte [] ba = bao.toByteArray();
+                String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
+                nameValuePairs.add(new BasicNameValuePair("image",ba1));
+                nameValuePairs.add(new BasicNameValuePair("cmd",System.currentTimeMillis() + ".jpg"));
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/upDateInfoWithImage.php");
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    httpClient.execute(httpPost);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            if(pDialog!=null)
+                pDialog.dismiss();
+
+            Toast.makeText(EditMyInfoActivity.this,"แก้ไขข้อมูลส่วนตัวสำเร็จ"
+                    ,Toast.LENGTH_LONG).show();
+
+            EditMyInfoActivity.this.finish();
+        }
+    }
+
+    //===================================================================================================
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String filePath = null;
+
+        //gallery
+        if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK){
+            selectedImageUri = data.getData();
+        }
+
+        //camera
+        else if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
+            selectedImageUri = imageUri;
+        }
+
+        if(selectedImageUri != null){
+            try {
+                // OI FILE Manager
+                String filemanagerstring = selectedImageUri.getPath();
+
+                // MEDIA GALLERY
+                String selectedImagePath = getPath(selectedImageUri);
+
+                if (selectedImagePath != null) {
+                    filePath = selectedImagePath;
+                } else if (filemanagerstring != null) {
+                    filePath = filemanagerstring;
+                } else {
+                    Toast.makeText(getApplicationContext(), "Unknown path",
+                            Toast.LENGTH_LONG).show();
+                    Log.e("Bitmap", "Unknown path");
+                }
+
+                if (filePath != null) {
+                    decodeFile(filePath);
+                } else {
+                    bitmap = null;
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Internal error",
+                        Toast.LENGTH_LONG).show();
+                Log.e(e.getClass().getName(), e.getMessage(), e);
+            }
+        }
+    }
+
+    private void decodeFile(String filePath) {
+        // Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, o);
+
+        // The new size we want to scale to
+        final int REQUIRED_SIZE = 1024;
+
+        // Find the correct scale value. It should be the power of 2.
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE)
+                break;
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+
+        // Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        bitmap = BitmapFactory.decodeFile(filePath, o2);
+
+        Picasso.with(getApplicationContext()).load(selectedImageUri).transform(new CircleTransform()).into(userImage);
+    }
+
+    private String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if (cursor != null) {
+            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else
+            return null;
+    }
+
+    //=======================================================================================================
     public class getMyInfo extends AsyncTask<Void, Void, String>{
         SharedPreferences sp = getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
         String uID = sp.getString("key_userID","");
@@ -177,13 +417,13 @@ public class EditMyInfoActivity extends ActionBarActivity {
 
                     String sex = jsonObject.getString("sex");
                     if (sex.equals("ชาย")){
-                        sexSpinner.setSelection(1);
-                    }
-                    else {
                         sexSpinner.setSelection(0);
                     }
+                    else {
+                        sexSpinner.setSelection(1);
+                    }
 
-                    String displayImage = jsonObject.getString("displayImage");
+                    displayImage = jsonObject.getString("displayImage");
                     Picasso.with(EditMyInfoActivity.this)
                             .load("http://reportdatacenter.esy.es/process/userImage/" + displayImage)
                             .transform(new CircleTransform()).into(userImage);
