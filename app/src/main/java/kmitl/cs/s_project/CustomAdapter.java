@@ -4,10 +4,14 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +25,25 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.logging.Log;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +57,10 @@ public class CustomAdapter extends BaseAdapter {
     NewFeed feed;
     ConnectionDetector cd;
     Boolean isInternetPresent = false;
+    InputStream is = null;
+    String js_result = "";
+    ProgressDialog pDialog;
+    String pID;
 
     public CustomAdapter(Activity activity, List<NewFeed> data){
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -121,25 +147,13 @@ public class CustomAdapter extends BaseAdapter {
         mViewHolder.nShareTxt.setText(String.valueOf(feed.nShare));
 
         // like Button
-        if (mViewHolder!=null){
-            mViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String pos = nFeed.get(position).postName;
-                    int p = nFeed.get(position).postID;
-                /*if (p==feed.postID){
-                    Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
-                }*/
-                if (p==p){
-                    Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
-                    mViewHolder.likeButton.setTag(position);
-                    mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color));
-                }
-                    //Toast.makeText(mActivity,pos,Toast.LENGTH_LONG).show();
-                    //mViewHolder.likeButton.setTextColor(mActivity.getResources().getColor(R.color.post_5_color));
-                }
-            });
-        }
+        mViewHolder.likeButton.setTag(position);
+        mViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewHolder.nLikeTxt.setText(String.valueOf(nFeed.get(position).nLike+1));
+            }
+        });
 
         // Intent to Personal Activity
         mViewHolder.userImage.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +171,7 @@ public class CustomAdapter extends BaseAdapter {
         final String b = mActivity.getResources().getString(R.string.c);
         final String[] choose = {a,b};
 
+        mViewHolder.arrowDown.setTag(position);
         mViewHolder.arrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,7 +180,20 @@ public class CustomAdapter extends BaseAdapter {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (choose[which].equals(a)){
+                            SharedPreferences sp = mActivity.getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+                            String uID = sp.getString("key_userID", "");
+                            int mID = Integer.parseInt(uID);
+                            final int uId = nFeed.get(position).userID;
 
+                            if (mID==uId){
+                                Toast.makeText(mActivity,"ไม่สามารถติดตามเรื่องร้องเรียนของคุณเองได้"
+                                        ,Toast.LENGTH_LONG).show();
+                                notifyDataSetChanged();
+                            }
+                            else {
+                                pID = String.valueOf(nFeed.get(position).postID);
+                                new follow().execute();
+                            }
                         }
                         else {
                             Intent intent = new Intent(mActivity,PostMapActivity.class);
@@ -199,5 +227,81 @@ public class CustomAdapter extends BaseAdapter {
         Button commentButton;
         Button shareButton;
         ImageView arrowDown;
+    }
+
+    public class follow extends AsyncTask<Void, Void, String>{
+        SharedPreferences sp = mActivity.getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+        String uID = sp.getString("key_userID", "");
+
+        @Override
+        protected String doInBackground(Void... params) {
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("userID", uID));
+            nameValuePairs.add(new BasicNameValuePair("postID",pID));
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/checkFollow.php");
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                HttpResponse response = httpClient.execute(httpPost);
+                HttpEntity entity = response.getEntity();
+                is = entity.getContent();
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                while ((line = reader.readLine()) != null){
+                    sb.append(line+ "\n");
+                }
+                is.close();
+                js_result = sb.toString();
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            try {
+                JSONObject jObject = new JSONObject(js_result);
+                if (jObject.getString("status").equals("pass")){
+                    ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                    nameValuePairs.add(new BasicNameValuePair("userID", uID));
+                    nameValuePairs.add(new BasicNameValuePair("postID",pID));
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/follow.php");
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    httpClient.execute(httpPost);
+
+                }
+                else {
+                    if(pDialog!=null)
+                        pDialog.dismiss();
+
+                    Toast.makeText(mActivity,"คุณได้ติดตามเรื่องร้องเรียนนี้แล้ว"
+                            ,Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

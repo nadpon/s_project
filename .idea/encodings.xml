@@ -2,6 +2,8 @@
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/ChangePasswordActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/CustomAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/CustomAdapterFollow.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/EditMyInfoActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/HotIssueActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/MainActivity.java" charset="UTF-8" />

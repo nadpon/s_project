@@ -125,17 +125,15 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/ic_action_favorite"
             android:ellipsize="end"
             android:textSize="16sp"
             android:layout_below="@+id/postImage" />
         <TextView
             android:id="@+id/nLikeTxt"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="0"
-            android:maxLines="5"
             android:layout_toRightOf="@id/f"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="0dp"
@@ -146,18 +144,17 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="200dp"
+            android:layout_toLeftOf="@+id/nShareTxt"
             android:src="@drawable/ic_action_share"
             android:ellipsize="end"
             android:textSize="16sp"
-            android:layout_toRightOf="@id/nLikeTxt"
             android:layout_below="@+id/postImage" />
         <TextView
             android:id="@+id/nShareTxt"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="0"
-            android:layout_toRightOf="@id/h"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             android:layout_below="@+id/postImage"/>
@@ -168,7 +165,6 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:text="ถูกใจ"
-            android:focusable="false"
             android:background="@drawable/border3"
             android:layout_below="@+id/postImage"/>
 

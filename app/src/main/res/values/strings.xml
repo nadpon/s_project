@@ -75,4 +75,6 @@
     <string name="title_activity_setting_page">SettingPageActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_edit_my_info">EditMyInfoActivity</string>
+    <string name="title_activity_manage_follow">ManageFollowActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>

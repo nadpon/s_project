@@ -124,6 +124,18 @@
             android:name=".EditMyInfoActivity"
             android:label="แก้ไขข้อมูลส่วนตัว"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".ManageFollowActivity"
+            android:label="จัดการเรื่องเรียนที่ติดตาม"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="เกี่ยวกับ"
+            android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme">
         </activity>
     </application>

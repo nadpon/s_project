@@ -111,6 +111,7 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
         mListView.setFocusable(false);
         mListView.setFocusableInTouchMode(false);
         mListView.setClickable(false);
+
     }
 
     public void onRefresh(){

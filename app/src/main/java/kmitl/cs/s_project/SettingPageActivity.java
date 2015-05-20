@@ -44,6 +44,22 @@ public class SettingPageActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        editFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingPageActivity.this,ManageFollowActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        aboutApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingPageActivity.this,AboutActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

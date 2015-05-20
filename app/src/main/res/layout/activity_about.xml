@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#009999"
+    tools:context="kmitl.cs.s_project.AboutActivity">
+
+    <TextView
+        android:id="@+id/a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:textSize="18dp"
+        android:text="แอพพลิเคชันนี้เป็นโครงงานปัญหาพิเศษ"/>
+
+    <TextView
+        android:id="@+id/b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/a"
+        android:layout_centerHorizontal="true"
+        android:textSize="17dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:text="ระบบสารสนเทศเพื่อยกระดับความปลอดภัย"/>
+    <TextView
+        android:id="@+id/c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/b"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:text="และสิ่งแวดล้อมเชิงบูรณาการ"/>
+
+    <TextView
+        android:id="@+id/e"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/c"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:text="จัดทำโดย"/>
+    <TextView
+        android:id="@+id/f"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/e"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:text="น.ส. กิ่งสุคนธ์ เจตน์เจริญ 54050814"/>
+    <TextView
+        android:id="@+id/g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/f"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:text="นาย ณัฐพล สิริกมลเนตร 54050861"/>
+    <TextView
+        android:id="@+id/h"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/g"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        android:text="นาย ปิยะวุฒิ คันธะมาลย์ 54050919"/>
+
+    <TextView
+        android:id="@+id/i"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_above="@+id/j"
+        android:layout_centerHorizontal="true"
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:text="ภาควิชาวิทยาการคอมพิวเตอร์"/>
+    <TextView
+        android:id="@+id/j"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/k"
+        android:layout_centerHorizontal="true"
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:text="คณะวิทยาศาสตร์"/>
+    <TextView
+        android:id="@+id/k"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:text="สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณลาดกระบัง"/>
+
+
+</RelativeLayout>
