@@ -100,15 +100,22 @@ public class HotIssueActivity extends Fragment implements SwipeRefreshLayout.OnR
         Gson gson = new Gson();
         Blog2 blog = gson.fromJson(jsonString, Blog2.class);
 
-        List<HotIssue> datas = blog.getData();
+        if (blog.count==0){
+            swipeRefreshLayout.setVisibility(View.INVISIBLE);
+            Toast.makeText(HotIssueActivity.this.getActivity(),"ยังไม่มีประเด็นร้อนตอนนี้"
+                    , Toast.LENGTH_LONG).show();
+        }
+        else {
+            List<HotIssue> datas = blog.getData();
 
-        mAdapter = new CustomAdapter2(this.getActivity(),datas);
-        mListView.setAdapter(mAdapter);
+            mAdapter = new CustomAdapter2(this.getActivity(),datas);
+            mListView.setAdapter(mAdapter);
 
-        mListView.setItemsCanFocus(true);
-        mListView.setFocusable(false);
-        mListView.setFocusableInTouchMode(false);
-        mListView.setClickable(false);
+            mListView.setItemsCanFocus(true);
+            mListView.setFocusable(false);
+            mListView.setFocusableInTouchMode(false);
+            mListView.setClickable(false);
+        }
     }
 
     @Override
@@ -124,34 +131,16 @@ public class HotIssueActivity extends Fragment implements SwipeRefreshLayout.OnR
 
         mListView = (ListView) rootView.findViewById(R.id.listView);
 
-        cd = new ConnectionDetector(getActivity().getApplicationContext());
-        isInternetPresent = cd.isConnectingToInternet();
-        if (isInternetPresent){
-            SharedPreferences sp = getActivity().getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
-            String load = sp.getString("load", "");
-            String result = sp.getString("result","");
-            if (load.equals("yes")){
-                showData(result);
-            }
-            else {
-                new getHotIssue().execute();
-            }
+        /*SharedPreferences sp = getActivity().getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
+        String load = sp.getString("load", "");
+        String result = sp.getString("result","");
+        if (load.equals("yes")){
+            showData(result);
         }
         else {
-            final Dialog dialog = new Dialog(this.getActivity());
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.lost_internet_dialog);
-            dialog.setCancelable(false);
-            dialog.show();
-            Button ok = (Button) dialog.findViewById(R.id.ok);
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    getActivity().recreate();
-                }
-            });
-        }
+            new getHotIssue().execute();
+        }*/
+        new getHotIssue().execute();
 
         return rootView;
     }

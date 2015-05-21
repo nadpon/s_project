@@ -1,18 +1,43 @@
 package kmitl.cs.s_project;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,8 +49,9 @@ public class CustomAdapter2 extends BaseAdapter {
     private ViewHolder mViewHolder;
     Activity mActivity;
     HotIssue feed;
-    ConnectionDetector cd;
-    Boolean isInternetPresent = false;
+    InputStream is = null;
+    String js_result = "";
+    String pID;
 
     public CustomAdapter2(Activity activity, List<HotIssue> data){
         mInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -61,11 +87,11 @@ public class CustomAdapter2 extends BaseAdapter {
             mViewHolder.postStatus = (TextView) convertView.findViewById(R.id.postStatus);
             mViewHolder.postDetail = (TextView) convertView.findViewById(R.id.postDetail);
             mViewHolder.postImage = (ImageView) convertView.findViewById(R.id.postImage);
-            mViewHolder.likeButton = (Button) convertView.findViewById(R.id.likeButton);
-            mViewHolder.commentButton = (Button) convertView.findViewById(R.id.commentButton);
-            mViewHolder.shareButton = (Button) convertView.findViewById(R.id.shareButton);
-            mViewHolder.arrowDown = (ImageView) convertView.findViewById(R.id.arrowDown);
+            mViewHolder.commentButton = (LinearLayout) convertView.findViewById(R.id.commentButton);
+            mViewHolder.optionButton = (LinearLayout) convertView.findViewById(R.id.optionButton);
+            mViewHolder.map = (ImageView) convertView.findViewById(R.id.map);
             mViewHolder.nLikeTxt = (TextView) convertView.findViewById(R.id.nLikeTxt);
+            mViewHolder.nLikeTxt.setTag(position);
             mViewHolder.nShareTxt = (TextView) convertView.findViewById(R.id.nShareTxt);
 
             convertView.setTag(mViewHolder);
@@ -101,9 +127,6 @@ public class CustomAdapter2 extends BaseAdapter {
         mViewHolder.postStatus.setText(feed.statusName);
         mViewHolder.postDetail.setText(mActivity.getResources().getText(R.string.dtail)+" "+feed.detail);
 
-        cd = new ConnectionDetector(mActivity.getApplicationContext());
-        isInternetPresent = cd.isConnectingToInternet();
-
         // load postImage
         Picasso.with(mActivity).load("http://reportdatacenter.esy.es/process/postImage/"+feed.getPostImage())
                 .into(mViewHolder.postImage);
@@ -125,6 +148,48 @@ public class CustomAdapter2 extends BaseAdapter {
             }
         });
 
+        final String a = mActivity.getResources().getString(R.string.b);
+        final String b = mActivity.getResources().getString(R.string.c);
+        final String[] choose = {a,b};
+
+        /*mViewHolder.arrowDown.setTag(position);
+        mViewHolder.arrowDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setItems(choose, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (choose[which].equals(a)){
+                            SharedPreferences sp = mActivity.getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+                            String uID = sp.getString("key_userID", "");
+                            int mID = Integer.parseInt(uID);
+                            final int uId = nFeed.get(position).userID;
+
+                            if (mID==uId){
+                                Toast.makeText(mActivity, "ไม่สามารถติดตามเรื่องร้องเรียนของคุณเองได้"
+                                        , Toast.LENGTH_LONG).show();
+                                notifyDataSetChanged();
+                            }
+                            else {
+                                pID = String.valueOf(nFeed.get(position).postID);
+                                new follow().execute();
+                            }
+                        }
+                        else {
+                            Intent intent = new Intent(mActivity,PostMapActivity.class);
+                            intent.putExtra("lat",String.valueOf(nFeed.get(position).gpsLatitude));
+                            intent.putExtra("lng",String.valueOf(nFeed.get(position).gpsLongitude));
+                            mActivity.startActivity(intent);
+                        }
+                    }
+                });
+                builder.setNegativeButton(null, null);
+                builder.create();
+                builder.show();
+            }
+        });*/
+
         return convertView;
     }
 
@@ -139,9 +204,81 @@ public class CustomAdapter2 extends BaseAdapter {
         ImageView postImage;
         TextView nLikeTxt;
         TextView nShareTxt;
-        Button likeButton;
-        Button commentButton;
-        Button shareButton;
-        ImageView arrowDown;
+        LinearLayout commentButton;
+        LinearLayout optionButton;
+        ImageView map;
+    }
+
+    public class follow extends AsyncTask<Void, Void, String> {
+        SharedPreferences sp = mActivity.getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+        String uID = sp.getString("key_userID", "");
+
+        @Override
+        protected String doInBackground(Void... params) {
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("userID", uID));
+            nameValuePairs.add(new BasicNameValuePair("postID",pID));
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/checkFollow.php");
+            try {
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                HttpResponse response = httpClient.execute(httpPost);
+                HttpEntity entity = response.getEntity();
+                is = entity.getContent();
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                while ((line = reader.readLine()) != null){
+                    sb.append(line+ "\n");
+                }
+                is.close();
+                js_result = sb.toString();
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            try {
+                JSONObject jObject = new JSONObject(js_result);
+                if (jObject.getString("status").equals("pass")){
+                    ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                    nameValuePairs.add(new BasicNameValuePair("userID", uID));
+                    nameValuePairs.add(new BasicNameValuePair("postID",pID));
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/follow.php");
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    httpClient.execute(httpPost);
+
+                }
+                else {
+                    Toast.makeText(mActivity,"คุณได้ติดตามเรื่องร้องเรียนนี้ไปแล้ว"
+                            ,Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

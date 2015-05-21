@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="440dp"
+    android:layout_height="420dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
@@ -32,11 +32,10 @@
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/a"/>
         <ImageView
-            android:id="@+id/arrowDown"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/arrow"
+            android:id="@+id/map"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_action_place"
             android:layout_alignParentRight="true"/>
         <TextView
             android:id="@+id/postDate"
@@ -120,71 +119,82 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_action_picture"
             android:layout_below="@+id/e"/>
-        <ImageView
+        <TextView
             android:id="@+id/f"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_action_favorite"
             android:ellipsize="end"
             android:textSize="16sp"
+            android:text="เห็นด้วย"
             android:layout_below="@+id/postImage" />
         <TextView
             android:id="@+id/nLikeTxt"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/f"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="3dp"
             android:textSize="16sp"
+            android:text="0"
             android:layout_below="@+id/postImage"/>
-        <ImageView
-            android:id="@+id/h"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/nShareTxt"
-            android:src="@drawable/ic_action_share"
+
+        <TextView
+            android:id="@+id/g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/nLikeTxt"
+            android:layout_marginTop="20dp"
             android:ellipsize="end"
             android:textSize="16sp"
+            android:text="แชร์"
             android:layout_below="@+id/postImage" />
+
         <TextView
             android:id="@+id/nShareTxt"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/g"
+            android:layout_marginLeft="3dp"
             android:text="0"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:textSize="16sp"
             android:layout_below="@+id/postImage"/>
 
-        <Button
-            android:id="@+id/likeButton"
-            android:layout_marginTop="35dp"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:text="ถูกใจ"
-            android:background="@drawable/border3"
-            android:layout_below="@+id/postImage"/>
-
-        <Button
+        <LinearLayout
             android:id="@+id/commentButton"
-            android:layout_marginTop="35dp"
-            android:layout_width="127dp"
-            android:layout_height="30dp"
-            android:text="แสดงความเห็น"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="18dp"
+            android:orientation="vertical"
             android:background="@drawable/border3"
-            android:layout_toRightOf="@+id/likeButton"
-            android:layout_below="@+id/postImage"/>
-        <Button
-            android:id="@+id/shareButton"
-            android:layout_marginTop="35dp"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:text="แชร์"
+            android:layout_toStartOf="@+id/optionButton"
+            android:layout_below="@+id/postImage">
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="1dp"
+                android:layout_gravity="center"
+                android:src="@drawable/chat_bubble"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/optionButton"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="18dp"
+            android:layout_alignParentRight="true"
             android:background="@drawable/border3"
-            android:layout_toRightOf="@+id/commentButton"
-            android:layout_below="@+id/postImage"/>
+            android:layout_below="@+id/postImage"
+            android:orientation="vertical" >
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="1dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_list"/>
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

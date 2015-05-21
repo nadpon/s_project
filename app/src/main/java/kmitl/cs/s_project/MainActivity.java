@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     private static final int ACTION_BUTTON_SHOW_DELAY_MS = 200;
@@ -196,19 +197,74 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        SharedPreferences sp = getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
-        String result = sp.getString("result","");
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("load", "yes");
-        editor.putString("result", result);
-        editor.commit();
 
-        SharedPreferences sp1 = getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
-        String result1 = sp1.getString("result","");
-        SharedPreferences.Editor editor1 = sp1.edit();
-        editor.putString("load", "yes");
-        editor.putString("result", result1);
-        editor1.commit();
+        if (tab.getPosition()==0){
+            SharedPreferences sp = getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+            String result = sp.getString("result","");
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("load", "yes");
+            editor.putString("result", result);
+            editor.commit();
+
+            SharedPreferences sp1 = getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
+            String result1 = sp1.getString("result","");
+            SharedPreferences.Editor editor1 = sp1.edit();
+            editor1.putString("load", "yes");
+            editor1.putString("result", result1);
+            editor1.commit();
+
+            SharedPreferences sp2 = getSharedPreferences("prefs_noti", Context.MODE_PRIVATE);
+            String result2 = sp2.getString("result","");
+            SharedPreferences.Editor editor2 = sp2.edit();
+            editor2.putString("load", "yes");
+            editor2.putString("result", result2);
+            editor2.commit();
+        }
+        else if (tab.getPosition()==1){
+            SharedPreferences sp = getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+            String result = sp.getString("result","");
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("load", "yes");
+            editor.putString("result", result);
+            editor.commit();
+
+            SharedPreferences sp1 = getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
+            String result1 = sp1.getString("result","");
+            SharedPreferences.Editor editor1 = sp1.edit();
+            editor1.putString("load", "yes");
+            editor1.putString("result", result1);
+            editor1.commit();
+
+            SharedPreferences sp2 = getSharedPreferences("prefs_noti", Context.MODE_PRIVATE);
+            String result2 = sp2.getString("result","");
+            SharedPreferences.Editor editor2 = sp2.edit();
+            editor2.putString("load", "yes");
+            editor2.putString("result", result2);
+            editor2.commit();
+        }
+        else if (tab.getPosition()==2){
+            SharedPreferences sp = getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+            String result = sp.getString("result","");
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("load", "yes");
+            editor.putString("result", result);
+            editor.commit();
+
+            SharedPreferences sp1 = getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
+            String result1 = sp1.getString("result","");
+            SharedPreferences.Editor editor1 = sp1.edit();
+            editor1.putString("load", "yes");
+            editor1.putString("result", result1);
+            editor1.commit();
+
+            SharedPreferences sp2 = getSharedPreferences("prefs_noti", Context.MODE_PRIVATE);
+            String result2 = sp2.getString("result","");
+            SharedPreferences.Editor editor2 = sp2.edit();
+            editor2.putString("load", "yes");
+            editor2.putString("result", result2);
+            editor2.commit();
+        }
+
     }
 
     @Override
@@ -225,5 +281,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         editor.putString("load", "");
         editor.putString("result", "");
         editor.commit();
+
+        SharedPreferences sp1 = getSharedPreferences("prefs_hotIssue", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor1 = sp1.edit();
+        editor1.putString("load", "");
+        editor1.putString("result","");
+        editor1.commit();
+
+        SharedPreferences sp2 = getSharedPreferences("prefs_noti", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sp2.edit();
+        editor2.putString("load", "");
+        editor2.putString("result","");
+        editor2.commit();
     }
 }

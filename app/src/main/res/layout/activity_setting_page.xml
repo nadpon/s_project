@@ -70,6 +70,8 @@
         android:clickable="true"
         android:background="@drawable/backgroundstate"
         android:layout_below="@+id/c"
+        android:divider="@drawable/mydivider"
+        android:showDividers="middle"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -77,6 +79,10 @@
             android:text="จัดการเรื่องร้องเรียนที่ติดตาม"
             android:textSize="18dp"
             android:gravity="center_vertical"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7f8c8d" />
     </LinearLayout>
 
     <LinearLayout

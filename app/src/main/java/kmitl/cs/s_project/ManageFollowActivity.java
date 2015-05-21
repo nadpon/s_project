@@ -9,7 +9,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -131,14 +133,20 @@ public class ManageFollowActivity extends ActionBarActivity {
         Gson gson = new Gson();
         Blog_follow blog = gson.fromJson(jsonString, Blog_follow.class);
 
-        List<follow> datas = blog.getData();
+        if (blog.count==0){
+            mListView.setVisibility(View.INVISIBLE);
+            Toast.makeText(this,"ยังไม่ได้ติดตามเรื่องเรียนเลยนะ\nติดตามหน่อยจิ"
+                    , Toast.LENGTH_LONG).show();
+        }
+        else {
+            List<follow> datas = blog.getData();
+            mAdapter = new CustomAdapterFollow(this,datas);
+            mListView.setAdapter(mAdapter);
 
-        mAdapter = new CustomAdapterFollow(this,datas);
-        mListView.setAdapter(mAdapter);
-
-        mListView.setItemsCanFocus(true);
-        mListView.setFocusable(false);
-        mListView.setFocusableInTouchMode(false);
-        mListView.setClickable(false);
+            mListView.setItemsCanFocus(true);
+            mListView.setFocusable(false);
+            mListView.setFocusableInTouchMode(false);
+            mListView.setClickable(false);
+        }
     }
 }

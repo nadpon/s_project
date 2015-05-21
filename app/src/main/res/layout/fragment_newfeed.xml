@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:dividerHeight="0dp"
-        android:scrollbars="none"
-        android:focusable="true" />
+        android:scrollbars="none" />
 
 </android.support.v4.widget.SwipeRefreshLayout>

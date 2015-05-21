@@ -18,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 
@@ -59,7 +61,6 @@ public class CustomAdapter extends BaseAdapter {
     Boolean isInternetPresent = false;
     InputStream is = null;
     String js_result = "";
-    ProgressDialog pDialog;
     String pID;
 
     public CustomAdapter(Activity activity, List<NewFeed> data){
@@ -96,11 +97,11 @@ public class CustomAdapter extends BaseAdapter {
             mViewHolder.postStatus = (TextView) convertView.findViewById(R.id.postStatus);
             mViewHolder.postDetail = (TextView) convertView.findViewById(R.id.postDetail);
             mViewHolder.postImage = (ImageView) convertView.findViewById(R.id.postImage);
-            mViewHolder.likeButton = (Button) convertView.findViewById(R.id.likeButton);
-            mViewHolder.commentButton = (Button) convertView.findViewById(R.id.commentButton);
-            mViewHolder.shareButton = (Button) convertView.findViewById(R.id.shareButton);
-            mViewHolder.arrowDown = (ImageView) convertView.findViewById(R.id.arrowDown);
+            mViewHolder.commentButton = (LinearLayout) convertView.findViewById(R.id.commentButton);
+            mViewHolder.optionButton = (LinearLayout) convertView.findViewById(R.id.optionButton);
+            mViewHolder.map = (ImageView) convertView.findViewById(R.id.map);
             mViewHolder.nLikeTxt = (TextView) convertView.findViewById(R.id.nLikeTxt);
+            mViewHolder.nLikeTxt.setTag(position);
             mViewHolder.nShareTxt = (TextView) convertView.findViewById(R.id.nShareTxt);
 
             convertView.setTag(mViewHolder);
@@ -146,15 +147,6 @@ public class CustomAdapter extends BaseAdapter {
         mViewHolder.nLikeTxt.setText(String.valueOf(feed.nLike));
         mViewHolder.nShareTxt.setText(String.valueOf(feed.nShare));
 
-        // like Button
-        mViewHolder.likeButton.setTag(position);
-        mViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewHolder.nLikeTxt.setText(String.valueOf(nFeed.get(position).nLike+1));
-            }
-        });
-
         // Intent to Personal Activity
         mViewHolder.userImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +163,7 @@ public class CustomAdapter extends BaseAdapter {
         final String b = mActivity.getResources().getString(R.string.c);
         final String[] choose = {a,b};
 
-        mViewHolder.arrowDown.setTag(position);
+        /*mViewHolder.arrowDown.setTag(position);
         mViewHolder.arrowDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,7 +199,7 @@ public class CustomAdapter extends BaseAdapter {
                 builder.create();
                 builder.show();
             }
-        });
+        });*/
 
         return convertView;
     }
@@ -223,10 +215,9 @@ public class CustomAdapter extends BaseAdapter {
         ImageView postImage;
         TextView nLikeTxt;
         TextView nShareTxt;
-        Button likeButton;
-        Button commentButton;
-        Button shareButton;
-        ImageView arrowDown;
+        LinearLayout commentButton;
+        LinearLayout optionButton;
+        ImageView map;
     }
 
     public class follow extends AsyncTask<Void, Void, String>{
@@ -287,10 +278,7 @@ public class CustomAdapter extends BaseAdapter {
 
                 }
                 else {
-                    if(pDialog!=null)
-                        pDialog.dismiss();
-
-                    Toast.makeText(mActivity,"คุณได้ติดตามเรื่องร้องเรียนนี้แล้ว"
+                    Toast.makeText(mActivity,"คุณได้ติดตามเรื่องร้องเรียนนี้ไปแล้ว"
                             ,Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {

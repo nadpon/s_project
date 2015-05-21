@@ -102,16 +102,22 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
         Gson gson = new Gson();
         Blog blog = gson.fromJson(jsonString, Blog.class);
 
-        List<NewFeed> datas = blog.getData();
+       if (blog.count==0){
+           swipeRefreshLayout.setVisibility(View.INVISIBLE);
+           Toast.makeText(NewFeedActivity.this.getActivity(),"ยังไม่มีเรื่องเรียนตอนนี้"
+                   , Toast.LENGTH_LONG).show();
+       }
+       else{
+           List<NewFeed> datas = blog.getData();
 
-        mAdapter = new CustomAdapter(this.getActivity(),datas);
-        mListView.setAdapter(mAdapter);
+           mAdapter = new CustomAdapter(this.getActivity(),datas);
+           mListView.setAdapter(mAdapter);
 
-        mListView.setItemsCanFocus(true);
-        mListView.setFocusable(false);
-        mListView.setFocusableInTouchMode(false);
-        mListView.setClickable(false);
-
+           mListView.setItemsCanFocus(true);
+           mListView.setFocusable(false);
+           mListView.setFocusableInTouchMode(false);
+           mListView.setClickable(false);
+       }
     }
 
     public void onRefresh(){
@@ -148,7 +154,7 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
 
         mListView = (ListView) rootView.findViewById(R.id.listView);
 
-        SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
+        /*SharedPreferences sp = getActivity().getSharedPreferences("prefs_newFeed", Context.MODE_PRIVATE);
         String load = sp.getString("load", "");
         String result = sp.getString("result","");
         if (load.equals("yes")){
@@ -156,7 +162,8 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
         }
         else {
             new getNewFeed().execute();
-        }
+        }*/
+        new getNewFeed().execute();
 
         return rootView;
     }
