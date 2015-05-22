@@ -45,7 +45,7 @@ public class CustomAdapterNoti extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null){
-            convertView = mInflater.inflate(R.layout.noti,parent,false);
+            convertView = mInflater.inflate(R.layout.notification,parent,false);
             mViewHolder = new ViewHolder();
 
             mViewHolder.postImage = (ImageView) convertView.findViewById(R.id.postImage);
