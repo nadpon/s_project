@@ -159,6 +159,17 @@ public class CustomAdapter extends BaseAdapter {
             }
         });
 
+        mViewHolder.map.setTag(position);
+        mViewHolder.map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity,PostMapActivity.class);
+                intent.putExtra("lat",String.valueOf(nFeed.get(position).gpsLatitude));
+                intent.putExtra("lng",String.valueOf(nFeed.get(position).gpsLongitude));
+                mActivity.startActivity(intent);
+            }
+        });
+
         final String a = mActivity.getResources().getString(R.string.b);
         final String b = mActivity.getResources().getString(R.string.c);
         final String[] choose = {a,b};

@@ -41,7 +41,7 @@ public class PostMapActivityFragment extends Fragment {
 
         mMarker = mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(lat, lng)));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng),15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng),17));
 
         return rootView;
     }

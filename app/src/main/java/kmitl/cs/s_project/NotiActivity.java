@@ -31,7 +31,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by nadpon on 6/4/2558.
@@ -154,7 +153,7 @@ public class NotiActivity extends Fragment implements SwipeRefreshLayout.OnRefre
     }
     public void showData(String jsonString){
         Gson gson = new Gson();
-        Blog_noti blog = gson.fromJson(jsonString, Blog_noti.class);
+        Blog_notification blog = gson.fromJson(jsonString, Blog_notification.class);
 
         if (blog.count==0){
             swipeRefreshLayout.setVisibility(View.INVISIBLE);

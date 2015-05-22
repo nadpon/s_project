@@ -113,10 +113,8 @@ public class NewFeedActivity extends Fragment implements SwipeRefreshLayout.OnRe
            mAdapter = new CustomAdapter(this.getActivity(),datas);
            mListView.setAdapter(mAdapter);
 
-           mListView.setItemsCanFocus(true);
-           mListView.setFocusable(false);
-           mListView.setFocusableInTouchMode(false);
            mListView.setClickable(false);
+           mListView.setFocusable(false);
        }
     }
 
