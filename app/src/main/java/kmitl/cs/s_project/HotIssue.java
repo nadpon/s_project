@@ -13,7 +13,6 @@ public class HotIssue {
     double gpsLatitude;
     String postDate;
     int nLike;
-    int nShare;
     String postImage;
     int statusID;
     String displayName;
@@ -91,14 +90,6 @@ public class HotIssue {
 
     public void setnLike(int nLike) {
         this.nLike = nLike;
-    }
-
-    public int getnShare() {
-        return nShare;
-    }
-
-    public void setnShare(int nShare) {
-        this.nShare = nShare;
     }
 
     public String getPostImage() {

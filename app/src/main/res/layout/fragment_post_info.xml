@@ -4,6 +4,7 @@
     android:layout_height="440dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:id="@+id/main"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_marginTop="15dp"
@@ -12,8 +13,7 @@
         <ImageView
             android:id="@+id/userImage"
             android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:visibility="invisible"/>
+            android:layout_height="64dp"/>
         <TextView
             android:id="@+id/a"
             android:layout_width="10dp"
@@ -30,8 +30,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/a"
-            android:visibility="invisible"/>
+            android:layout_toRightOf="@+id/a" />
         <TextView
             android:id="@+id/postDate"
             android:layout_width="100dp"
@@ -40,8 +39,7 @@
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:layout_toRightOf="@+id/a"
-            android:layout_below="@+id/userNameDisplay"
-            android:visibility="invisible"/>
+            android:layout_below="@+id/userNameDisplay"/>
         <TextView
             android:id="@+id/b"
             android:layout_width="61dp"
@@ -114,7 +112,6 @@
             android:layout_marginTop="55dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_action_picture"
-            android:layout_below="@+id/e"
-            android:visibility="invisible"/>
+            android:layout_below="@+id/e" />
     </RelativeLayout>
 </RelativeLayout>

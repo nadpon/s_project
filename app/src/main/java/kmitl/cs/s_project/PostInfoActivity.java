@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,6 +97,7 @@ public class PostInfoActivity extends ActionBarActivity {
         TextView status;
         TextView detail;
         ImageView postIm;
+        RelativeLayout main;
 
         public PlaceholderFragment() {
         }
@@ -104,6 +106,7 @@ public class PostInfoActivity extends ActionBarActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                main.setVisibility(View.INVISIBLE);
                 pDialog = new ProgressDialog(PostInfoActivity.this);
                 pDialog.setMessage(getResources().getString(R.string.please_wait));
                 pDialog.setIndeterminate(false);
@@ -158,30 +161,27 @@ public class PostInfoActivity extends ActionBarActivity {
                         Picasso.with(PostInfoActivity.this)
                                 .load("http://reportdatacenter.esy.es/process/userImage/"+displayImage)
                                 .transform(new CircleTransform()).into(userIm);
-                        userIm.setVisibility(View.VISIBLE);
 
                         userDisplayName.setText(jsonObject.getString("displayName"));
-                        userDisplayName.setVisibility(View.VISIBLE);
 
                         date.setText(jsonObject.getString("postDate"));
-                        date.setVisibility(View.VISIBLE);
 
                         postN.setText(jsonObject.getString("postName"));
                         cateName.setText(jsonObject.getString("cateName"));
                         status.setText(jsonObject.getString("statusName"));
-                        detail.setText("รายละเอียด : "+jsonObject.getString("detail"));
+                        detail.setText("รายละเอียด : " + jsonObject.getString("detail"));
 
                         String postImage = jsonObject.getString("postImage");
 
                         Picasso.with(PostInfoActivity.this)
                                 .load("http://reportdatacenter.esy.es/process/postImage/" + postImage).into(postIm);
-                        postIm.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 if(pDialog!=null)
                     pDialog.dismiss();
+                main.setVisibility(View.VISIBLE);
             }
         }
 
@@ -201,6 +201,7 @@ public class PostInfoActivity extends ActionBarActivity {
             status = (TextView) rootView.findViewById(R.id.postStatus);
             detail = (TextView) rootView.findViewById(R.id.postDetail);
             postIm = (ImageView) rootView.findViewById(R.id.postImage);
+            main = (RelativeLayout) rootView.findViewById(R.id.main);
 
             if (postName!=null){
                 new postInfo().execute();

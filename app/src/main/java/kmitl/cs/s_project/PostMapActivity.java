@@ -1,10 +1,22 @@
 package kmitl.cs.s_project;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class PostMapActivity extends ActionBarActivity {
@@ -13,6 +25,11 @@ public class PostMapActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_map);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
+        }
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -39,5 +56,37 @@ public class PostMapActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public class PlaceholderFragment extends Fragment{
+        GoogleMap mMap;
+        Marker mMarker;
+        SupportMapFragment mapFragment;
+        double lat,lng;
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView =  inflater.inflate(R.layout.fragment_post_map, container, false);
+            //get value from intent
+            lat = Double.parseDouble(getActivity().getIntent().getStringExtra("lat"));
+            lng = Double.parseDouble(getActivity().getIntent().getStringExtra("lng"));
+
+            FragmentManager fm = getChildFragmentManager();
+            mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
+            mMap = mapFragment.getMap();
+
+            mMarker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng)));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 17));
+
+            return rootView;
+        }
     }
 }

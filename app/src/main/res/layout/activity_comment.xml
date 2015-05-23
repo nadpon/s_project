@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kmitl.cs.s_project.CommentActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="465dp">
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true">
+        <EditText
+            android:id="@+id/commentEdit"
+            android:layout_width="310dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:singleLine="true"
+            android:background="@drawable/border4"/>
+        <ImageButton
+            android:id="@+id/sendcommentButton"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@color/title_color"
+            android:src="@drawable/ic_action_send_now"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>

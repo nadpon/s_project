@@ -1,6 +1,13 @@
 package kmitl.cs.s_project;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -14,8 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -91,17 +103,18 @@ public class PostInfoFullActivity extends ActionBarActivity {
         TextView postStatus;
         TextView postDetail;
         ImageView postImage;
-        TextView nLikeTxt;
-        TextView nShareTxt;
-        Button likeButton;
-        Button commentButton;
-        Button shareButton;
-        ImageView arrowDown;
+        RatingBar ratingBar;
+        LinearLayout commentButton;
+        LinearLayout optionButton;
+        ImageView map;
+        LayerDrawable stars;
+        RelativeLayout main;
         ProgressDialog pDialog;
         String postID;
         String js_result;
         InputStream is;
         JSONObject jsonObject;
+        String pID;
 
         public PlaceholderFragment() {
         }
@@ -110,6 +123,8 @@ public class PostInfoFullActivity extends ActionBarActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                main.setVisibility(View.INVISIBLE);
+
                 pDialog = new ProgressDialog(PostInfoFullActivity.this);
                 pDialog.setMessage(getResources().getString(R.string.please_wait));
                 pDialog.setIndeterminate(false);
@@ -191,10 +206,16 @@ public class PostInfoFullActivity extends ActionBarActivity {
                         else if (Integer.parseInt(jsonObject.getString("statusID"))==5){
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_7_color));
                             postStatus.setText("เรื่องร้องเรียนซ้ำ");
+                            commentButton.setVisibility(View.INVISIBLE);
+                            optionButton.setVisibility(View.INVISIBLE);
+                            ratingBar.setVisibility(View.INVISIBLE);
                         }
                         else {
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_8_color));
                             postStatus.setText("ไม่อยู่ในขอบเขต");
+                            commentButton.setVisibility(View.INVISIBLE);
+                            optionButton.setVisibility(View.INVISIBLE);
+                            ratingBar.setVisibility(View.INVISIBLE);
                         }
 
                         postDetail.setText("รายละเอียด : "+jsonObject.getString("detail"));
@@ -204,27 +225,292 @@ public class PostInfoFullActivity extends ActionBarActivity {
                         Picasso.with(PostInfoFullActivity.this)
                                 .load("http://reportdatacenter.esy.es/process/postImage/" + postIm).into(postImage);
 
-                        nLikeTxt.setText(String.valueOf(jsonObject.getInt("nLike")));
-                        nShareTxt.setText(String.valueOf(jsonObject.getInt("nShare")));
+                        // draw rating bar
+                        int nLike = Integer.parseInt(jsonObject.getString("nLike"));
+
+                        if (nLike<5){
+                            ratingBar.setRating(0);
+                        }
+                        else if (nLike<10){
+                            float a = (float) 0.5;
+                            ratingBar.setRating(a);
+                        }
+                        else if (nLike<15){
+                            ratingBar.setRating(1);
+                        }
+                        else if (nLike<20){
+                            float a = (float) 1.5;
+                            ratingBar.setRating(a);
+                        }
+                        else if (nLike<25){
+                            ratingBar.setRating(2);
+                        }
+                        else if (nLike<30){
+                            float a = (float) 2.5;
+                            ratingBar.setRating(a);
+                        }
+                        else if (nLike<35){
+                            ratingBar.setRating(3);
+                        }
+                        else if (nLike<40){
+                            float a = (float) 3.5;
+                            ratingBar.setRating(a);
+                        }
+                        else if (nLike<45){
+                            ratingBar.setRating(4);
+                        }
+                        else if (nLike<50){
+                            float a = (float) 4.5;
+                            ratingBar.setRating(a);
+                        }
+                        else {
+                            ratingBar.setRating(5);
+                        }
+
+                        // click map ImageView
+                        map.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(PostInfoFullActivity.this, PostMapActivity.class);
+                                try {
+                                    intent.putExtra("lat", String.valueOf(jsonObject.getDouble("gpsLatitude")));
+                                    intent.putExtra("lng", String.valueOf(jsonObject.getDouble("gpsLongitude")));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                startActivity(intent);
+                            }
+                        });
+
+                        //click comment button
+                        commentButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(PostInfoFullActivity.this,CommentActivity.class);
+                                try {
+                                    intent.putExtra("pID",String.valueOf(jsonObject.getInt("postID")));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                startActivity(intent);
+                            }
+                        });
+
+                        //click option button
+                        final String a = "เห็นด้วยกับเรื่องร้องเรียน";
+                        final String b = "ติดตามเรื่องร้องเรียน";
+                        final String[] choose = {a,b};
+
+                        optionButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(PostInfoFullActivity.this);
+                                builder.setItems(choose, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (choose[which].equals(b)) {
+                                            SharedPreferences sp = getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+                                            String uID = sp.getString("key_userID", "");
+                                            int mID = Integer.parseInt(uID);
+                                            int uId = 0;
+                                            try {
+                                                uId = jsonObject.getInt("userID");
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            if (mID == uId) {
+                                                Toast.makeText(PostInfoFullActivity.this, "ไม่สามารถติดตามเรื่องร้องเรียนของคุณเองได้"
+                                                        , Toast.LENGTH_LONG).show();
+                                            } else {
+                                                try {
+                                                    pID = String.valueOf(jsonObject.getInt("postID"));
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                new follow().execute();
+                                            }
+                                        } else {
+                                            try {
+                                                pID = String.valueOf(jsonObject.getInt("postID"));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            new checkLike().execute();
+                                        }
+                                    }
+                                });
+                                builder.setNegativeButton(null, null);
+                                builder.create();
+                                builder.show();
+                            }
+                        });
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 if(pDialog!=null)
                     pDialog.dismiss();
+
+                main.setVisibility(View.VISIBLE);
+            }
+        }
+
+        public class follow extends AsyncTask<Void, Void, String>{
+            SharedPreferences sp = getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+            String uID = sp.getString("key_userID", "");
+
+            @Override
+            protected String doInBackground(Void... params) {
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("userID", uID));
+                nameValuePairs.add(new BasicNameValuePair("postID",pID));
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/checkFollow.php");
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    HttpResponse response = httpClient.execute(httpPost);
+                    HttpEntity entity = response.getEntity();
+                    is = entity.getContent();
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                    while ((line = reader.readLine()) != null){
+                        sb.append(line+ "\n");
+                    }
+                    is.close();
+                    js_result = sb.toString();
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+
+                try {
+                    JSONObject jObject = new JSONObject(js_result);
+                    if (jObject.getString("status").equals("pass")){
+                        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                        nameValuePairs.add(new BasicNameValuePair("userID", uID));
+                        nameValuePairs.add(new BasicNameValuePair("postID",pID));
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/follow.php");
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                        httpClient.execute(httpPost);
+                    }
+                    else {
+                        Toast.makeText(PostInfoFullActivity.this,"คุณได้ติดตามเรื่องร้องเรียนนี้ไปแล้ว"
+                                ,Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public class checkLike extends AsyncTask<Void, Void, String>{
+            SharedPreferences sp = getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+            String uID = sp.getString("key_userID", "");
+
+            @Override
+            protected String doInBackground(Void... params) {
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("userID", uID));
+                nameValuePairs.add(new BasicNameValuePair("postID",pID));
+                nameValuePairs.add(new BasicNameValuePair("actID","1"));
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/checkLike.php");
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    HttpResponse response = httpClient.execute(httpPost);
+                    HttpEntity entity = response.getEntity();
+                    is = entity.getContent();
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                    while ((line = reader.readLine()) != null){
+                        sb.append(line+ "\n");
+                    }
+                    is.close();
+                    js_result = sb.toString();
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+
+                try {
+                    JSONObject jObject = new JSONObject(js_result);
+                    if (jObject.getString("status").equals("pass")){
+                        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                        nameValuePairs.add(new BasicNameValuePair("userID", uID));
+                        nameValuePairs.add(new BasicNameValuePair("postID",pID));
+                        nameValuePairs.add(new BasicNameValuePair("actID","1"));
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/like.php");
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                        httpClient.execute(httpPost);
+                    }
+                    else {
+                        Toast.makeText(PostInfoFullActivity.this,"คุณเห็นด้วยกับเรื่องร้องเรียนนี้ไปแล้ว"
+                                ,Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_post_info_full, container, false);
+            View rootView = inflater.inflate(R.layout.newfeed, container, false);
             //รับค่า intent
             postID = getIntent().getStringExtra("postID");
 
             //init
             userImage = (ImageView) rootView.findViewById(R.id.userImage);
-            userNameDisplay = (TextView) rootView.findViewById(R.id.userNameDisplay);
             userNameDisplay = (TextView) rootView.findViewById(R.id.userNameDisplay);
             postDate = (TextView) rootView.findViewById(R.id.postDate);
             postName = (TextView) rootView.findViewById(R.id.postName);
@@ -232,12 +518,13 @@ public class PostInfoFullActivity extends ActionBarActivity {
             postStatus = (TextView) rootView.findViewById(R.id.postStatus);
             postDetail = (TextView) rootView.findViewById(R.id.postDetail);
             postImage = (ImageView) rootView.findViewById(R.id.postImage);
-            likeButton = (Button) rootView.findViewById(R.id.likeButton);
-            commentButton = (Button) rootView.findViewById(R.id.commentButton);
-            shareButton = (Button) rootView.findViewById(R.id.shareButton);
-            arrowDown = (ImageView) rootView.findViewById(R.id.arrowDown);
-            nLikeTxt = (TextView) rootView.findViewById(R.id.nLikeTxt);
-            nShareTxt = (TextView) rootView.findViewById(R.id.nShareTxt);
+            ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
+            commentButton = (LinearLayout) rootView.findViewById(R.id.commentButton);
+            optionButton = (LinearLayout) rootView.findViewById(R.id.optionButton);
+            map = (ImageView) rootView.findViewById(R.id.map);
+            stars = (LayerDrawable) ratingBar.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(this.getResources().getColor(R.color.post_3_color), PorterDuff.Mode.SRC_ATOP);
+            main = (RelativeLayout) rootView.findViewById(R.id.main);
 
             new getPostInfo().execute();
 

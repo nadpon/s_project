@@ -136,6 +136,12 @@
             android:name=".AboutActivity"
             android:label="เกี่ยวกับ"
             android:screenOrientation="portrait"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".CommentActivity"
+            android:label="แสดงความเห็น"
+            android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme">
         </activity>
     </application>
