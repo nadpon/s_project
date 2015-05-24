@@ -70,8 +70,7 @@ public class CustomAdapterGridview extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 final int postID = personals.get(position).postID;
-                Toast.makeText(mActivity,String.valueOf(postID)
-                        ,Toast.LENGTH_LONG).show();
+
                 Intent intent = new Intent(mActivity,PostInfoFullActivity.class);
                 intent.putExtra("postID",String.valueOf(postID));
                 mActivity.startActivity(intent);

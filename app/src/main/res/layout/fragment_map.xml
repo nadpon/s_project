@@ -17,7 +17,8 @@
             android:background="@drawable/green_button_style"
             android:text="ยืนยันตำแหน่ง"
             android:textSize="18dp"
-            android:textColor="#34495e"/>
+            android:textStyle="bold"
+            android:textColor="#2c3e50"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
@@ -32,6 +33,7 @@
             android:background="@drawable/red_button_style"
             android:text="ยกเลิกการร้องเรียน"
             android:textSize="18dp"
-            android:textColor="#34495e"/>
+            android:textStyle="bold"
+            android:textColor="#2c3e50"/>
     </LinearLayout>
 </fragment>

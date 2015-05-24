@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">s_project</string>
+    <string name="app_name">ร้องเรียน</string>
     <string name="hello_world">Hello world!</string>
-    <string name="app_id">293293804178666</string>
     <string name="or">หรือ</string>
     <string name="email">อีเมล์</string>
     <string name="password">รหัสผ่าน</string>

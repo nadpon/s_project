@@ -97,13 +97,12 @@ public class PostActivity extends ActionBarActivity {
         ImageView postImage;
         EditText postName;
         EditText postDetail;
-        TextView addMap;
         Spinner cateSpinner;
         Button sendButton;
         View locateLayout;
         String cate;
         String lat, lng;
-        public static final int REQUEST_GALLERY = 1,REQUEST_CAMERA = 2,REQUEST_MAP = 3,RESULT_NOT = 1;;
+        public static final int REQUEST_GALLERY = 1,REQUEST_CAMERA = 2;
         Uri imageUri;
         Uri selectedImageUri = null;
         InputStream is;
@@ -128,17 +127,6 @@ public class PostActivity extends ActionBarActivity {
             //camera
             else if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
                 selectedImageUri = imageUri;
-            }
-
-            //map
-            else if (requestCode == REQUEST_MAP && resultCode == RESULT_OK){
-                lat = data.getStringExtra("lat");
-                lng = data.getStringExtra("lng");
-                addMap.setText("เพิ่มตำแหน่งแล้ว");
-                addMap.setTextColor(getResources().getColor(R.color.torquoise_color));
-            }
-            else if (requestCode == REQUEST_MAP && resultCode == RESULT_NOT){
-                finish();
             }
 
             if(selectedImageUri != null){
@@ -216,6 +204,7 @@ public class PostActivity extends ActionBarActivity {
                 return null;
         }
 
+        //===================================================================================================================
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         public class post extends AsyncTask<Void, Void, Void>{
             @Override
@@ -300,8 +289,6 @@ public class PostActivity extends ActionBarActivity {
             postImage = (ImageView) rootView.findViewById(R.id.postImage);
             postName = (EditText) rootView.findViewById(R.id.postName);
             postDetail = (EditText) rootView.findViewById(R.id.postDetail);
-            addMap = (TextView) rootView.findViewById(R.id.mapTextView);
-            locateLayout = rootView.findViewById(R.id.locateLayout);
             sendButton = (Button) rootView.findViewById(R.id.sendButton);
             cateSpinner = (Spinner) rootView.findViewById(R.id.cate_spinner);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.cate,
@@ -312,8 +299,9 @@ public class PostActivity extends ActionBarActivity {
             SharedPreferences sp = getSharedPreferences("prefs_user",MODE_PRIVATE);
             userID = sp.getString("key_userID","");
 
-            Toast.makeText(getApplicationContext(), userID,
-                    Toast.LENGTH_LONG).show();
+            //รับค่าจาก map
+            lat = getActivity().getIntent().getStringExtra("lat");
+            lng = getActivity().getIntent().getStringExtra("lng");
 
             //----------รับรูปตอนเริ่ม Activity------------------
             AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
@@ -377,22 +365,6 @@ public class PostActivity extends ActionBarActivity {
                     builder.setNegativeButton(null, null);
                     builder.create();
                     builder.show();
-                }
-            });
-
-            //--------------click addMap--------------------------
-            addMap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER)){
-                        Toast.makeText(getApplicationContext(), "กรุณาเปิด GPS",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    else {//gps is enable
-                        Intent intent = new Intent(PostActivity.this,MapActivity.class);
-                        startActivityForResult(intent,REQUEST_MAP);
-                    }
                 }
             });
 

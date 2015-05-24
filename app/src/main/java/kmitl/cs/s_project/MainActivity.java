@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -114,8 +115,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, PostActivity.class);
-                startActivity(intent);
+                LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER)){
+                    Toast.makeText(getApplicationContext(), "กรุณาเปิด GPS",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                    startActivity(intent);
+                }
             }
         }, ACTION_BUTTON_SHOW_DELAY_MS);
     }

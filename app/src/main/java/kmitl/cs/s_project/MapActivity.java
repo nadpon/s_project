@@ -348,8 +348,7 @@ public class MapActivity extends ActionBarActivity {
                     Intent intent = new Intent(MapActivity.this,PostActivity.class);
                     intent.putExtra("lat",latitude);
                     intent.putExtra("lng",longitude);
-                    setResult(RESULT_OK,intent);
-                    finish();
+                    startActivity(intent);
                 }
             });
 
@@ -357,8 +356,6 @@ public class MapActivity extends ActionBarActivity {
             cancel_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MapActivity.this,PostActivity.class);
-                    setResult(RESULT_NOT,intent);
                     finish();
                 }
             });

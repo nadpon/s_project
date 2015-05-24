@@ -247,8 +247,6 @@ public class PersonalActivity extends ActionBarActivity {
 
             //get value from intent
             uID = getIntent().getIntExtra("uId",0);
-            Toast.makeText(PersonalActivity.this,String.valueOf(uID)
-                    , Toast.LENGTH_LONG).show();
 
             //init
             userImage = (ImageView) rootView.findViewById(R.id.userImage);

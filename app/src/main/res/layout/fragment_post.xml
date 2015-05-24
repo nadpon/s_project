@@ -114,42 +114,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/locateLayout"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:background="@drawable/border">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/mapTextView"
-                android:text="เพิ่มตำแหน่ง"
-                android:textColor="@drawable/text_style"
-                android:gravity="center"
-                android:textSize="16dp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="185dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_marginTop="90dp"
+        android:orientation="vertical">
         <Button
+            android:id="@+id/sendButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/sendButton"
-            android:background="@drawable/green_button_style"
-            android:text="ส่งคำร้อง"
-            android:textSize="18dp"
-            android:textColor="#34495e"/>
+            android:background="#006666"
+            android:alpha="0.5"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:textColor="@color/bright_foreground_inverse_material_light"
+            android:text="ส่งเรื่องร้องเรียน"/>
     </LinearLayout>
 
 </LinearLayout>

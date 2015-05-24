@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
-    android:layout_height="wrap_content"
+    android:layout_height="265dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_gravity="left">
         <TextView
@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:text="คำแนะนำ"
             android:textStyle="bold"
-            android:textColor="#34495e"
+            android:textColor="#2980b9"
             android:textSize="18dp"/>
     </LinearLayout>
 
@@ -74,14 +74,17 @@
 
     <LinearLayout
         android:layout_width="100dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="25dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal">
         <Button
             android:id="@+id/ok"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="ตกลง"
-            android:background="@drawable/green_button_style"/>
+            android:textStyle="bold"
+            android:alpha="0.5"
+            android:textColor="@color/bright_foreground_inverse_material_light"
+            android:background="#006666"/>
     </LinearLayout>
 </LinearLayout>
