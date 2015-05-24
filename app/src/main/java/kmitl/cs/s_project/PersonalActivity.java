@@ -1,5 +1,6 @@
 package kmitl.cs.s_project;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -94,6 +95,7 @@ public class PersonalActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    @SuppressLint("ValidFragment")
     public class PlaceholderFragment extends Fragment {
         GridView gridView;
         ImageView userImage;

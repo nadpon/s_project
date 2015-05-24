@@ -1,5 +1,6 @@
 package kmitl.cs.s_project;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -83,6 +84,7 @@ public class PostInfoActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    @SuppressLint("ValidFragment")
     public class PlaceholderFragment extends Fragment {
         String postName;
         ProgressDialog pDialog;

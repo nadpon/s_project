@@ -1,5 +1,6 @@
 package kmitl.cs.s_project;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -88,6 +89,7 @@ public class ForgetpassActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    @SuppressLint("ValidFragment")
     public class PlaceholderFragment extends Fragment {
         ConnectionDetector cd;
         Boolean isInternetPresent = false;
@@ -96,6 +98,7 @@ public class ForgetpassActivity extends ActionBarActivity {
         String js_result = "";
         ProgressDialog pDialog;
         EditText emailEditText;
+        Button nextButton;
 
         public PlaceholderFragment() {
         }
@@ -189,7 +192,7 @@ public class ForgetpassActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_forgetpass, container, false);
 
             emailEditText = (EditText) rootView.findViewById(R.id.emailEditText);
-            Button nextButton = (Button) rootView.findViewById(R.id.nextButton);
+            nextButton = (Button) rootView.findViewById(R.id.nextButton);
 
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override

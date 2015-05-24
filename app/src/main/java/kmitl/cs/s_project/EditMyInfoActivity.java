@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class EditMyInfoActivity extends ActionBarActivity {
@@ -66,7 +69,7 @@ public class EditMyInfoActivity extends ActionBarActivity {
     Bitmap bitmap=null;
     Uri imageUri;
     Uri selectedImageUri = null;
-    LinearLayout main;
+    RelativeLayout main;
     ProgressDialog pDialog;
     InputStream is = null;
     String js_result = "";
@@ -83,7 +86,7 @@ public class EditMyInfoActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        main = (LinearLayout) findViewById(R.id.main);
+        main = (RelativeLayout) findViewById(R.id.main);
         fName = (EditText) findViewById(R.id.fNameEditText);
         lName = (EditText) findViewById(R.id.lNameEditText);
         address = (EditText) findViewById(R.id.addressEditText);
@@ -139,7 +142,12 @@ public class EditMyInfoActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 // update ข้อมูล
-                new uploadInfo().execute();
+                if (isEmailValid(email.getText().toString())){
+                    new uploadInfo().execute();
+                }
+                else {
+                    Toast.makeText(EditMyInfoActivity.this,"รูปแบบอีเมล์ไม่ถูกต้อง",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -436,5 +444,18 @@ public class EditMyInfoActivity extends ActionBarActivity {
 
             main.setVisibility(View.VISIBLE);
         }
+    }
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
     }
 }

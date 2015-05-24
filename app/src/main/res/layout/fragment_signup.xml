@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +9,7 @@
     tools:context="kmitl.cs.s_project.SignupActivity$PlaceholderFragment">
 
     <LinearLayout
+        android:id="@+id/a"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -24,11 +25,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/b"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="-5dp">
-
+        android:layout_below="@+id/a">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,10 +41,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/c"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/b">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,10 +56,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/d"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/c">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -67,10 +72,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/e"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="-5dp">
+        android:layout_marginTop="-5dp"
+        android:layout_below="@+id/d">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,10 +88,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/f"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="-5dp">
+        android:layout_marginTop="-5dp"
+        android:layout_below="@+id/e">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,10 +104,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/g"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="-5dp">
+        android:layout_marginTop="-5dp"
+        android:layout_below="@+id/f">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -109,10 +120,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/h"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="-10dp">
+        android:layout_marginTop="-10dp"
+        android:layout_below="@+id/g">
         <TextView
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -130,11 +143,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/i"
         android:orientation="horizontal"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="15dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/h">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,8 +160,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_above="@+id/l">
         <Button
             android:id="@+id/signupButton"
             android:layout_width="match_parent"
@@ -159,4 +174,12 @@
             android:text="ลงทะเบียน"/>
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/l"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+    </LinearLayout>
+
+</RelativeLayout>

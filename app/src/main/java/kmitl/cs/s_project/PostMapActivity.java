@@ -1,5 +1,6 @@
 package kmitl.cs.s_project;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -61,6 +62,7 @@ public class PostMapActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    @SuppressLint("ValidFragment")
     public class PlaceholderFragment extends Fragment{
         GoogleMap mMap;
         Marker mMarker;

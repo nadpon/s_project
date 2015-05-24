@@ -1,5 +1,6 @@
 package kmitl.cs.s_project;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -93,6 +94,7 @@ public class GetNewPassword extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
+    @SuppressLint("ValidFragment")
     public class PlaceholderFragment extends Fragment {
         Button getNewPassBtn;
         TextView userNameDisplay;

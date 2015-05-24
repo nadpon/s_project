@@ -103,10 +103,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:text="สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณลาดกระบัง"/>
+        android:text="สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง"/>
 
 
 </RelativeLayout>
