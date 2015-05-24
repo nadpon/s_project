@@ -111,7 +111,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="เกี่ยวกับแอพพลิเคชัน"
+            android:text="เกี่ยวกับแอปพลิเคชัน"
             android:textSize="18dp"
             android:gravity="center_vertical"/>
     </LinearLayout>
