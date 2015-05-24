@@ -157,7 +157,7 @@ public class NotiActivity extends Fragment implements SwipeRefreshLayout.OnRefre
 
         if (blog.count==0){
             swipeRefreshLayout.setVisibility(View.INVISIBLE);
-            Toast.makeText(NotiActivity.this.getActivity(),"ยังไม่มีการแจ้งเตื่อนตอนนี้"
+            Toast.makeText(NotiActivity.this.getActivity(),"ยังไม่มีการแจ้งเตือนตอนนี้"
                     , Toast.LENGTH_LONG).show();
         }
         else {

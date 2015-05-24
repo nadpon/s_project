@@ -37,6 +37,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/map_pointer"
+            android:alpha="0.5"
             android:layout_alignParentRight="true"/>
         <TextView
             android:id="@+id/postDate"

@@ -22,6 +22,7 @@ import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,6 +97,7 @@ public class GetNewPassword extends ActionBarActivity {
         Button getNewPassBtn;
         TextView userNameDisplay;
         ImageView userImage;
+        RelativeLayout main;
         ProgressDialog pDialog;
         String email;
         InputStream is;
@@ -109,6 +111,7 @@ public class GetNewPassword extends ActionBarActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                main.setVisibility(View.INVISIBLE);
 
                 pDialog = new ProgressDialog(GetNewPassword.this);
                 pDialog.setMessage("กรุณารอสักครู่ ...");
@@ -173,23 +176,62 @@ public class GetNewPassword extends ActionBarActivity {
 
                 if(pDialog!=null)
                     pDialog.dismiss();
+
+                main.setVisibility(View.VISIBLE);
             }
         }
 
-        private class sendNewPassword extends AsyncTask<Void, Void, String>{
+        private class sendPassword extends AsyncTask<Void, Void, String>{
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                pDialog = new ProgressDialog(GetNewPassword.this);
+                pDialog.setMessage("กรุณารอสักครู่ ...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
             }
 
             @Override
             protected String doInBackground(Void... params) {
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("email", email));
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://reportdatacenter.esy.es/sendPass.php");
+                try {
+                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity entity = response.getEntity();
+                    is = entity.getContent();
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                    while ((line = reader.readLine()) != null){
+                        sb.append(line+ "\n");
+                    }
+                    is.close();
+                    js_result = sb.toString();
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return null;
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                if(pDialog!=null)
+                    pDialog.dismiss();
+
+                Intent intent = new Intent(GetNewPassword.this,MainActivity.class);
+                startActivity(intent);
+
+                Toast.makeText(GetNewPassword.this,"รหัสผ่านถูกส่งไปที่อีเมล์ของคุณเรียบร้อย",Toast.LENGTH_LONG).show();
             }
         }
 
@@ -201,6 +243,7 @@ public class GetNewPassword extends ActionBarActivity {
             getNewPassBtn = (Button) rootView.findViewById(R.id.getNewPassButton);
             userNameDisplay = (TextView) rootView.findViewById(R.id.userNameDisplay);
             userImage = (ImageView) rootView.findViewById(R.id.userImage);
+            main = (RelativeLayout) rootView.findViewById(R.id.main);
 
             email = getIntent().getStringExtra("email");
 
@@ -209,7 +252,7 @@ public class GetNewPassword extends ActionBarActivity {
             getNewPassBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new sendNewPassword().execute();
+                    new sendPassword().execute();
                 }
             });
 

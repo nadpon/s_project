@@ -54,6 +54,8 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupActivity extends ActionBarActivity {
     EditText emailTxt,passTxt,fName,lName,address,tel;
@@ -204,10 +206,8 @@ public class SignupActivity extends ActionBarActivity {
                 return null;
         }
 
-        private class Uploader extends AsyncTask<Void, Void, Void> {
-
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-
+        //=====================================================================================================
+        private class checkEmail extends AsyncTask<Void, Void, Void> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -215,91 +215,31 @@ public class SignupActivity extends ActionBarActivity {
                 pDialog = new ProgressDialog(SignupActivity.this);
                 pDialog.setMessage("กรุณารอสักครู่ ...");
                 pDialog.setIndeterminate(false);
-                pDialog.setCancelable(true);
+                pDialog.setCancelable(false);
                 pDialog.show();
             }
 
             @Override
             protected Void doInBackground(Void... params) {
-
-                //--------------ส่งค่าไป DB----------------------------------------------
-
-                //ชุด1 = ส่ง email ไปเช็ค DB
                 ArrayList<NameValuePair> nameValuePairs1 = new ArrayList<NameValuePair>();
                 nameValuePairs1.add(new BasicNameValuePair("email", email));
-
-                if (bitmap==null){
-
-                    //ชุด2 = ส่งไปทั้ง insert DB
-                    nameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
-                    nameValuePairs.add(new BasicNameValuePair("email", email));
-                    nameValuePairs.add(new BasicNameValuePair("password", password));
-                    nameValuePairs.add(new BasicNameValuePair("fname", fname));
-                    nameValuePairs.add(new BasicNameValuePair("lname", lname));
-                    nameValuePairs.add(new BasicNameValuePair("sex", sex));
-
-                    HttpClient httpClient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/checkEmail.php");
-                    try {
-                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs1, "UTF-8"));
-                        HttpResponse response = httpClient.execute(httpPost);
-                        HttpEntity entity = response.getEntity();
-                        is = entity.getContent();
-                        StringBuilder sb = new StringBuilder();
-                        String line = null;
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                        while ((line = reader.readLine()) != null){
-                            sb.append(line+ "\n");
-                        }
-                        is.close();
-                        js_result = sb.toString();
-
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (ClientProtocolException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://reportdatacenter.esy.es/checkEmail.php");
+                try{
+                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs1,"UTF-8"));
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity entity = response.getEntity();
+                    is = entity.getContent();
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                    while ((line = reader.readLine()) != null){
+                        sb.append(line+ "\n");
                     }
-                }
-                else {
-
-                    //ชุด2 = ส่งไปทั้ง insert DB
-                    nameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
-                    nameValuePairs.add(new BasicNameValuePair("email", email));
-                    nameValuePairs.add(new BasicNameValuePair("password", password));
-                    nameValuePairs.add(new BasicNameValuePair("fname", fname));
-                    nameValuePairs.add(new BasicNameValuePair("lname", lname));
-                    nameValuePairs.add(new BasicNameValuePair("sex", sex));
-                    nameValuePairs.add(new BasicNameValuePair("address",address.getText().toString()));
-                    nameValuePairs.add(new BasicNameValuePair("tel",tel.getText().toString()));
-
-                    ByteArrayOutputStream bao ;
-                    bao = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
-                    byte [] ba = bao.toByteArray();
-                    String ba1 = Base64.encodeToString(ba,Base64.DEFAULT);
-                    nameValuePairs.add(new BasicNameValuePair("image",ba1));
-                    nameValuePairs.add(new BasicNameValuePair("cmd",System.currentTimeMillis() + ".jpg"));
-
-                    HttpClient httpclient = new DefaultHttpClient();
-                    HttpPost httppost = new HttpPost("http://reportdatacenter.esy.es/checkEmail.php");
-                    try{
-                       httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs1,"UTF-8"));
-                       HttpResponse response = httpclient.execute(httppost);
-                       HttpEntity entity = response.getEntity();
-                       is = entity.getContent();
-                       StringBuilder sb = new StringBuilder();
-                       String line = null;
-                       BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                       while ((line = reader.readLine()) != null){
-                           sb.append(line+ "\n");
-                       }
-                       is.close();
-                       js_result = sb.toString();
-                    }catch(Exception e){
-                       Log.v("log_tag", "Error in http connection "+e.toString());
-                    }
+                    is.close();
+                    js_result = sb.toString();
+                }catch(Exception e){
+                    Log.v("log_tag", "Error in http connection " + e.toString());
                 }
                 return null;
             }
@@ -307,7 +247,6 @@ public class SignupActivity extends ActionBarActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-
                 try {
                     if (android.os.Build.VERSION.SDK_INT > 9) {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -316,48 +255,15 @@ public class SignupActivity extends ActionBarActivity {
 
                     jObject = new JSONObject(js_result);
                     if (jObject.getString("status").equals("pass")){
-                        HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/signup.php");
-                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-                        httpClient.execute(httpPost);
+                        if(pDialog!=null)
+                            pDialog.dismiss();
 
-                        // get userID
-                        ArrayList<NameValuePair> nameValuePairs1 = new ArrayList<NameValuePair>();
-                        nameValuePairs1.add(new BasicNameValuePair("email", email));
-
-                        HttpClient httpClient1 = new DefaultHttpClient();
-                        HttpPost httpPost1 = new HttpPost("http://reportdatacenter.esy.es/getUserID.php");
-                        httpPost1.setEntity(new UrlEncodedFormEntity(nameValuePairs1, "UTF-8"));
-                        HttpResponse response = httpClient1.execute(httpPost1);
-                        HttpEntity entity = response.getEntity();
-                        is = entity.getContent();
-                        StringBuilder sb = new StringBuilder();
-                        String line = null;
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
-                        while ((line = reader.readLine()) != null){
-                            sb.append(line+ "\n");
-                        }
-                        is.close();
-                        js_result = sb.toString();
-                        JSONArray jsonArray = new JSONArray(js_result);
-                        for (int i=0;i<jsonArray.length();i++){
-                            JSONObject jObject1 = jsonArray.getJSONObject(i);
-                            String userID = String.valueOf(jObject1.getInt("userID"));
-                            SharedPreferences sp = getActivity().getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("key_userID",userID);
-                            editor.putString("key_login","yes");
-                            editor.commit();
-                            if(pDialog!=null)
-                                pDialog.dismiss();
-                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
+                        new signup().execute();
                     }
                     else {
                         if(pDialog!=null)
                             pDialog.dismiss();
+
                         Toast.makeText(SignupActivity.this, "อีเมล์ได้มีการลงทะเบียนก่อนหน้านี้แล้ว", Toast.LENGTH_LONG).show();
                         passTxt.clearFocus();
                         fName.clearFocus();
@@ -366,11 +272,138 @@ public class SignupActivity extends ActionBarActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
+                }
+            }
+        }
+
+        //=====================================================================================================
+        public class signup extends AsyncTask<Void, Void, String>{
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                pDialog = new ProgressDialog(SignupActivity.this);
+                pDialog.setMessage("กรุณารอสักครู่ ...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
+                nameValuePairs.add(new BasicNameValuePair("email", email));
+                nameValuePairs.add(new BasicNameValuePair("password", password));
+                nameValuePairs.add(new BasicNameValuePair("fname", fname));
+                nameValuePairs.add(new BasicNameValuePair("lname", lname));
+                nameValuePairs.add(new BasicNameValuePair("sex", sex));
+                nameValuePairs.add(new BasicNameValuePair("address",address.getText().toString()));
+                nameValuePairs.add(new BasicNameValuePair("tel",tel.getText().toString()));
+
+                ByteArrayOutputStream bao ;
+                bao = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+                byte [] ba = bao.toByteArray();
+                String ba1 = Base64.encodeToString(ba,Base64.DEFAULT);
+                nameValuePairs.add(new BasicNameValuePair("image",ba1));
+                nameValuePairs.add(new BasicNameValuePair("cmd", System.currentTimeMillis() + ".jpg"));
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://reportdatacenter.esy.es/signup.php");
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    httpClient.execute(httpPost);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if(pDialog!=null)
+                    pDialog.dismiss();
+
+                new getUserID().execute();
+            }
+        }
+
+        //=====================================================================================================
+        public class getUserID extends AsyncTask<Void, Void, String>{
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                pDialog = new ProgressDialog(SignupActivity.this);
+                pDialog.setMessage("กรุณารอสักครู่ ...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("email", email));
+
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://reportdatacenter.esy.es/getUserID.php");
+                try {
+                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity entity = response.getEntity();
+                    is = entity.getContent();
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+                    while ((line = reader.readLine()) != null){
+                        sb.append(line+ "\n");
+                    }
+                    is.close();
+                    js_result = sb.toString();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+
+                try {
+                    JSONArray jsonArray = new JSONArray(js_result);
+                    for (int i=0;i<jsonArray.length();i++){
+                        JSONObject jObject1 = jsonArray.getJSONObject(i);
+                        String userID = String.valueOf(jObject1.getInt("userID"));
+                        SharedPreferences sp = getActivity().getSharedPreferences("prefs_user", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("key_userID",userID);
+                        editor.putString("key_login","yes");
+                        editor.commit();
+
+                        if(pDialog!=null)
+                            pDialog.dismiss();
+
+                        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -457,7 +490,13 @@ public class SignupActivity extends ActionBarActivity {
                                     ,"กรุณาเพิ่มรูปประจำตัว",Toast.LENGTH_LONG).show();
                         }
                         else {
-                            new Uploader().execute();
+                            if (isEmailValid(email)){
+                                new checkEmail().execute();
+                            }
+                            else {
+                                Toast.makeText(SignupActivity.this.getApplicationContext()
+                                        ,"รูปแบบอีเมล์ไม่ถูกต้อง",Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                     else {
@@ -468,6 +507,19 @@ public class SignupActivity extends ActionBarActivity {
 
             return rootView;
         }
+    }
 
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
     }
 }

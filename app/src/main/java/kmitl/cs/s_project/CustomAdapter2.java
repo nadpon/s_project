@@ -96,7 +96,7 @@ public class CustomAdapter2 extends BaseAdapter {
             mViewHolder.optionButton = (LinearLayout) convertView.findViewById(R.id.optionButton);
             mViewHolder.map = (ImageView) convertView.findViewById(R.id.map);
             mViewHolder.stars = (LayerDrawable) mViewHolder.ratingBar.getProgressDrawable();
-            mViewHolder.stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+            mViewHolder.stars.getDrawable(2).setColorFilter(mActivity.getResources().getColor(R.color.post_3_color), PorterDuff.Mode.SRC_ATOP);
 
             convertView.setTag(mViewHolder);
         }

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,6 +99,7 @@ public class PersonalActivity extends ActionBarActivity {
         ImageView userImage;
         TextView userDisName;
         TextView email;
+        RelativeLayout main;
         int uID;
         ProgressDialog pDialog;
         String js_result;
@@ -112,6 +114,8 @@ public class PersonalActivity extends ActionBarActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                main.setVisibility(View.INVISIBLE);
+
                 pDialog = new ProgressDialog(PersonalActivity.this);
                 pDialog.setMessage(getResources().getString(R.string.please_wait));
                 pDialog.setIndeterminate(false);
@@ -176,6 +180,7 @@ public class PersonalActivity extends ActionBarActivity {
                 if(pDialog!=null)
                     pDialog.dismiss();
 
+                main.setVisibility(View.VISIBLE);
                 new getPostImage().execute();
             }
         }
@@ -221,11 +226,17 @@ public class PersonalActivity extends ActionBarActivity {
                 Gson gson = new Gson();
                 Blog_personal blogPersonal = gson.fromJson(jsonString,Blog_personal.class);
 
-                List<Personal> datas = blogPersonal.getData();
+                if (blogPersonal.count==0){
+                    gridView.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    List<Personal> datas = blogPersonal.getData();
 
-                mAdapter = new CustomAdapterGridview(PersonalActivity.this,datas);
-                //set grid view
-                gridView.setAdapter(mAdapter);
+                    mAdapter = new CustomAdapterGridview(PersonalActivity.this,datas);
+                    //set grid view
+                    gridView.setAdapter(mAdapter);
+                }
+
             }
         }
 
@@ -244,6 +255,7 @@ public class PersonalActivity extends ActionBarActivity {
             userDisName = (TextView) rootView.findViewById(R.id.userNameDisplay);
             email = (TextView) rootView.findViewById(R.id.email);
             gridView = (GridView) rootView.findViewById(R.id.gridview);
+            main = (RelativeLayout) rootView.findViewById(R.id.main);
 
             // execute to get userInfo
             new getUserInfo().execute();

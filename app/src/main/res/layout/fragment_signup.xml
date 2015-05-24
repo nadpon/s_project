@@ -41,32 +41,22 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/information"
+            android:textColor="#2980b9"
             android:textSize="18dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="325dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="-18dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:src="@drawable/line_black"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="5dp">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -112,8 +102,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textEmailAddress"
-            android:ems="10"
+            android:inputType="phone"
+            android:maxLength="10"
             android:id="@+id/telEditText"
             android:hint=" หมายเลขโทรศัพท์" />
     </LinearLayout>
@@ -153,19 +143,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="185dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical">
         <Button
+            android:id="@+id/signupButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/signupButton"
-            android:background="@drawable/green_button_style"
-            android:text="ลงทะเบียน"
-            android:textSize="18dp"
-            android:textColor="#34495e"/>
+            android:background="#006666"
+            android:alpha="0.5"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:textColor="@color/bright_foreground_inverse_material_light"
+            android:text="ลงทะเบียน"/>
     </LinearLayout>
 
 </LinearLayout>

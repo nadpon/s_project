@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,27 +10,28 @@
     tools:context="kmitl.cs.s_project.ForgetpassActivity$PlaceholderFragment">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp">
-
+        android:id="@+id/a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="ค้นหาบัญชีผู้ใช้ของคุณ"
+            android:textColor="#2980b9"
             android:textSize="18dp"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/b"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="-20dp">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/a">
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/emailEditText"
@@ -39,18 +40,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="185dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
         <Button
+            android:id="@+id/nextButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/nextButton"
-            android:background="@drawable/green_button_style"
-            android:text="ต่อไป"
-            android:textColor="#34495e"/>
+            android:background="#006666"
+            android:alpha="0.5"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:textColor="@color/bright_foreground_inverse_material_light"
+            android:text="ต่อไป"/>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
