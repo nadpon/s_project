@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="90dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical">
@@ -14,7 +14,7 @@
         android:id="@+id/postName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@+id/postImage"
         android:layout_marginLeft="10dp"
         android:text="fdggfjnffdfhnvmn"/>
@@ -22,7 +22,7 @@
         android:id="@+id/statusName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/postImage"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/postName"
@@ -32,7 +32,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
         android:text="fgfgjh"/>
+    <TextView
+        android:id="@+id/note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/postImage"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/statusName"
+        android:text="note" />
 
 </RelativeLayout>

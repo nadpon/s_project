@@ -12,6 +12,15 @@ public class Noti {
     String postName;
     String postImage;
     String updateDate;
+    String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public int getUpdateID() {
         return updateID;

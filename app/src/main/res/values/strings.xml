@@ -22,7 +22,7 @@
     <string name="hotissue">ประเด็นร้อน</string>
     <string name="noti">แจ้งเตือน</string>
 
-    <string name="d">รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร</string>
+    <string name="d">รหัสผ่านต้องมีอย่างน้อย 8 ตัว</string>
     <string name="e">รหัสผ่านใหม่ไม่ตรงกัน</string>
     <string name="f">กรุณากรอกข้อมูลให้ครบ</string>
     <string name="g">ใส่รหัสผ่านเก่าผิด กรุณาใส่รหัสผ่านอีกครั้ง</string>

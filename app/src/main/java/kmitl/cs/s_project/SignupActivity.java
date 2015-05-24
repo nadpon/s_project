@@ -493,7 +493,13 @@ public class SignupActivity extends ActionBarActivity {
                         }
                         else {
                             if (isEmailValid(email)){
-                                new checkEmail().execute();
+                                if (password.length()>=8){
+                                    new checkEmail().execute();
+                                }
+                                else {
+                                    Toast.makeText(SignupActivity.this.getApplicationContext()
+                                            ,"รหัสผ่านต้องมีอย่างน้อย 8 ตัว",Toast.LENGTH_LONG).show();
+                                }
                             }
                             else {
                                 Toast.makeText(SignupActivity.this.getApplicationContext()

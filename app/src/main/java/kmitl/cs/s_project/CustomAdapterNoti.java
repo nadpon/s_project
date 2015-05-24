@@ -53,6 +53,7 @@ public class CustomAdapterNoti extends BaseAdapter {
             mViewHolder.postName = (TextView) convertView.findViewById(R.id.postName);
             mViewHolder.status = (TextView) convertView.findViewById(R.id.statusName);
             mViewHolder.date = (TextView) convertView.findViewById(R.id.date);
+            mViewHolder.note = (TextView) convertView.findViewById(R.id.note);
 
             convertView.setTag(mViewHolder);
         }
@@ -80,9 +81,16 @@ public class CustomAdapterNoti extends BaseAdapter {
             mViewHolder.status.setTextColor(mActivity.getResources().getColor(R.color.post_4_color));
         }
 
-        mViewHolder.status.setText("อัพเดท : "+feed.statusName);
+        mViewHolder.status.setText("อัพเดท : " + feed.statusName);
 
         mViewHolder.date.setText(nFeed.get(position).updateDate);
+
+        if (nFeed.get(position).note!=""){
+            mViewHolder.note.setText("admin..."+feed.note);
+        }
+        else {
+            mViewHolder.note.setVisibility(View.INVISIBLE);
+        }
 
         //click post image
         mViewHolder.postImage.setTag(position);
@@ -103,5 +111,6 @@ public class CustomAdapterNoti extends BaseAdapter {
         TextView postName;
         TextView status;
         TextView date;
+        TextView note;
     }
 }

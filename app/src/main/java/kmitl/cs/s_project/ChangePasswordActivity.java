@@ -64,12 +64,12 @@ public class ChangePasswordActivity extends ActionBarActivity {
                     Toast.makeText(ChangePasswordActivity.this, ChangePasswordActivity.this.getResources().getText(R.string.f)
                             , Toast.LENGTH_LONG).show();
                 }
-                else if (oldPass.getText().toString()!=""&&newPass.getText().toString()!=""&&newPass.getText().length()<6
+                else if (oldPass.getText().toString()!=""&&newPass.getText().toString()!=""&&newPass.getText().length()<8
                         &&newPassAgain.getText().toString()!=""){
                     Toast.makeText(ChangePasswordActivity.this,ChangePasswordActivity.this.getResources().getText(R.string.d)
                             ,Toast.LENGTH_LONG).show();
                 }
-                else if (oldPass.getText().toString()!=""&&newPass.getText().toString()!=""&&newPass.getText().length()>=6
+                else if (oldPass.getText().toString()!=""&&newPass.getText().toString()!=""&&newPass.getText().length()>=8
                         &&newPassAgain.getText().toString()!=""){
                     if (newPass.getText().toString().equals(newPassAgain.getText().toString())){
                         new changePassWord().execute();
