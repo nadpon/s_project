@@ -2,6 +2,7 @@ package kmitl.cs.s_project;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class CustomAdapterNoti extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null){
             convertView = mInflater.inflate(R.layout.notification,parent,false);
             mViewHolder = new ViewHolder();
@@ -82,6 +83,17 @@ public class CustomAdapterNoti extends BaseAdapter {
         mViewHolder.status.setText("อัพเดท : "+feed.statusName);
 
         mViewHolder.date.setText(nFeed.get(position).updateDate);
+
+        //click post image
+        mViewHolder.postImage.setTag(position);
+        mViewHolder.postImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity,PostInfoFullActivity.class);
+                intent.putExtra("postID",String.valueOf(nFeed.get(position).postID));
+                mActivity.startActivity(intent);
+            }
+        });
 
         return convertView;
     }

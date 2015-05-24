@@ -142,7 +142,8 @@
             android:name=".CommentActivity"
             android:label="แสดงความเห็น"
             android:screenOrientation="portrait"
-            android:theme="@style/CustomActionBarTheme">
+            android:theme="@style/CustomActionBarTheme"
+            android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

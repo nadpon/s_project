@@ -15,7 +15,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/NotiActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/PersonalActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/PostMapActivity.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/PostMapActivityFragment.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/kmitl/cs/s_project/SettingPageActivity.java" charset="UTF-8" />
   </component>
 </project>

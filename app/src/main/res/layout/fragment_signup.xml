@@ -20,8 +20,7 @@
             android:ems="10"
             android:id="@+id/emailEditText"
             android:drawableLeft="@drawable/email_icon"
-            android:hint="ที่อยู่อีเมล์"
-            android:background="@drawable/edit_text"/>
+            android:hint="ที่อยู่อีเมล์" />
     </LinearLayout>
 
     <LinearLayout
@@ -37,8 +36,7 @@
             android:ems="10"
             android:id="@+id/passwordEditText"
             android:drawableLeft="@drawable/password_icon"
-            android:hint="รหัสผ่าน"
-            android:background="@drawable/edit_text"/>
+            android:hint="รหัสผ่าน" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,8 +73,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/fNameEditText"
-            android:hint=" ชื่อ"
-            android:background="@drawable/edit_text"/>
+            android:hint=" ชื่อ" />
     </LinearLayout>
 
     <LinearLayout
@@ -90,8 +87,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/lNameEditText"
-            android:hint=" นามสกุล"
-            android:background="@drawable/edit_text"/>
+            android:hint=" นามสกุล" />
     </LinearLayout>
 
     <LinearLayout
@@ -105,8 +101,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/addressEditText"
-            android:hint=" ที่อยู่"
-            android:background="@drawable/edit_text"/>
+            android:hint=" ที่อยู่" />
     </LinearLayout>
 
     <LinearLayout
@@ -120,8 +115,7 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/telEditText"
-            android:hint=" หมายเลขโทรศัพท์"
-            android:background="@drawable/edit_text"/>
+            android:hint=" หมายเลขโทรศัพท์" />
     </LinearLayout>
 
     <LinearLayout

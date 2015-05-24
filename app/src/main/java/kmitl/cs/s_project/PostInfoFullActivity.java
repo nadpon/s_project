@@ -226,7 +226,7 @@ public class PostInfoFullActivity extends ActionBarActivity {
                                 .load("http://reportdatacenter.esy.es/process/postImage/" + postIm).into(postImage);
 
                         // draw rating bar
-                        int nLike = Integer.parseInt(jsonObject.getString("nLike"));
+                        int nLike = jsonObject.getInt("nLike");
 
                         if (nLike<5){
                             ratingBar.setRating(0);

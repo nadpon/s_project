@@ -35,8 +35,7 @@
             android:ems="10"
             android:id="@+id/emailEditText"
             android:drawableLeft="@drawable/email_icon"
-            android:hint=" ที่อยู่อีเมล์"
-            android:background="@drawable/edit_text"/>
+            android:hint=" ที่อยู่อีเมล์" />
     </LinearLayout>
 
     <LinearLayout
