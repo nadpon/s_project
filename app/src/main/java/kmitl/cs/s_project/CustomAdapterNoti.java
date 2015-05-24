@@ -86,7 +86,7 @@ public class CustomAdapterNoti extends BaseAdapter {
         mViewHolder.date.setText(nFeed.get(position).updateDate);
 
         if (nFeed.get(position).note!=""){
-            mViewHolder.note.setText("admin..."+feed.note);
+            mViewHolder.note.setText("admin: "+feed.note);
         }
         else {
             mViewHolder.note.setVisibility(View.INVISIBLE);
