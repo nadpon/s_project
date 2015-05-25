@@ -168,7 +168,32 @@ public class PostInfoActivity extends ActionBarActivity {
 
                         postN.setText(jsonObject.getString("postName"));
                         cateName.setText(jsonObject.getString("cateName"));
-                        status.setText(jsonObject.getString("statusName"));
+
+                        if (jsonObject.getInt("statusID")==1){
+                            status.setTextColor(PostInfoActivity.this.getResources().getColor(R.color.post_1_color));
+                            status.setText(jsonObject.getString("statusName"));
+                        }
+                        else if (jsonObject.getInt("statusID")==2){
+                            status.setTextColor(PostInfoActivity.this.getResources().getColor(R.color.post_2_color));
+                            status.setText(jsonObject.getString("statusName"));
+                        }
+                        else if (jsonObject.getInt("statusID")==3){
+                            status.setTextColor(PostInfoActivity.this.getResources().getColor(R.color.post_3_color));
+                            status.setText(jsonObject.getString("statusName"));
+                        }
+                        else if (jsonObject.getInt("statusID")==4){
+                            status.setTextColor(PostInfoActivity.this.getResources().getColor(R.color.post_4_color));
+                            status.setText(jsonObject.getString("statusName"));
+                        }
+                        else if (jsonObject.getInt("statusID")==5){
+                            status.setTextColor(PostInfoActivity.this.getResources().getColor(R.color.post_7_color));
+                            status.setText("เรื่องร้องเรียนซ้ำ");
+                        }
+                        else {
+                            status.setTextColor(PostInfoActivity.this.getResources().getColor(R.color.post_8_color));
+                            status.setText("ไม่อยู่ในขอบเขต");
+                        }
+
                         detail.setText("รายละเอียด : " + jsonObject.getString("detail"));
 
                         String postImage = jsonObject.getString("postImage");

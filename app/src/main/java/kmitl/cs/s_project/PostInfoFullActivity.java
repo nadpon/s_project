@@ -186,23 +186,23 @@ public class PostInfoFullActivity extends ActionBarActivity {
 
                         postCate.setText(jsonObject.getString("cateName"));
 
-                        if (Integer.parseInt(jsonObject.getString("statusID"))==1){
+                        if (jsonObject.getInt("statusID")==1){
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_1_color));
                             postStatus.setText(jsonObject.getString("statusName"));
                         }
-                        else if (Integer.parseInt(jsonObject.getString("statusID"))==2){
+                        else if (jsonObject.getInt("statusID")==2){
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_2_color));
                             postStatus.setText(jsonObject.getString("statusName"));
                         }
-                        else if (Integer.parseInt(jsonObject.getString("statusID"))==3){
+                        else if (jsonObject.getInt("statusID")==3){
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_3_color));
                             postStatus.setText(jsonObject.getString("statusName"));
                         }
-                        else if (Integer.parseInt(jsonObject.getString("statusID"))==4){
+                        else if (jsonObject.getInt("statusID")==4){
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_4_color));
                             postStatus.setText(jsonObject.getString("statusName"));
                         }
-                        else if (Integer.parseInt(jsonObject.getString("statusID"))==5){
+                        else if (jsonObject.getInt("statusID")==5){
                             postStatus.setTextColor(PostInfoFullActivity.this.getResources().getColor(R.color.post_7_color));
                             postStatus.setText("เรื่องร้องเรียนซ้ำ");
                             commentButton.setVisibility(View.INVISIBLE);
